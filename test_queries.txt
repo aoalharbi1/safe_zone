@@ -1,0 +1,18 @@
+user_1 = User.objects.create(first_name = "John", last_name = "Smith", email = "John@gmail.com", secret_question = "How are you ?", secret_answer = "Fine, thank you")
+msg_1 = Message.objects.create(message = "Hello admin", user = User.objects.get(email = "John@gmail.com"))
+msg_2 = Message.objects.create(message = "Hello sir", user = User.objects.get(email = "John@gmail.com"))
+
+user_1.messages.values()
+
+
+report_1 = Report.objects.create(md5 = "99017f6eebbac24f351415dd410d522d", sha1 = "4d1740485713a2ab3a4f5822a01f645fe8387f92", sha256 = "52d3df0ed60c46f336c131bf2ca454f73bafdc4b04dfa2aea80746f5ba9e6d1c", is_safe = False, user = User.objects.get(email = "John@gmail.com"))
+
+user_1.reports.values()
+
+
+company_1 = Company.objects.create(name = "McAfee", detected = True, version = "5.400.0.1158", result = "Generic.dx!rkx", update = "20100515", report = report_1)
+
+u1_report_companies = user_1.reports.first()
+u1_report_companies.companies.values()
+
+user_1.delete() # This will delete the user and all of their their details
