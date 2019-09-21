@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Safe Zone</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
+</head>
+
+<body>
+    {% include "safe_zone_app/header.html" %}
+
+    <div class="main_container">
+        <nav class="dropdown">
+            <div class="dropbtn">Menu</div>
+            <div class="dropdown_content">
+                <span id="admin">Sign up</span>
+                <span id="users">Sign in</span>
+            </div>
+        </nav>
+    </div>
+</body>
+
+</html>
