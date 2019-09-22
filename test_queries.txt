@@ -1,4 +1,4 @@
-user_1 = User.objects.create(first_name = "John", last_name = "Smith", email = "John@gmail.com", secret_question = "How are you ?", secret_answer = "Fine, thank you")
+user_1 = User.objects.create(first_name = "John", last_name = "Smith", password = "ggg", email = "John@gmail.com", secret_question = "How are you ?", secret_answer = "Fine, thank you")
 msg_1 = Message.objects.create(message = "Hello admin", user = User.objects.get(email = "John@gmail.com"))
 msg_2 = Message.objects.create(message = "Hello sir", user = User.objects.get(email = "John@gmail.com"))
 
@@ -16,3 +16,5 @@ u1_report_companies = user_1.reports.first()
 u1_report_companies.companies.values()
 
 user_1.delete() # This will delete the user and all of their their details
+
+admin_1 = Admin.objects.create(first_name = "John", password = "fff", last_name = "Smith", email = "John@gmail.com")
