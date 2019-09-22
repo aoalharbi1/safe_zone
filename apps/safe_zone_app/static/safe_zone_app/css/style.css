@@ -25,13 +25,16 @@ header {
     justify-content: center;
     width: inherit;
 }
-#sign_up_form {
+.sign_up_form, .sign_in_form{
     display: none;
     justify-content: right;
     align-items: center;
     margin: auto;
     flex-wrap: wrap;
     width: 400px;
+}
+.btn {
+    margin: 0px 0px 0px 25px;
 }
 .small_text {
     margin: 30px;
@@ -46,10 +49,10 @@ header {
     box-shadow: 3px 6px #888888; 
 }
 @media only screen and (max-width: 740px){
-    #sign_up_form {
+    .sign_up_form, .sign_in_form{
         width: 360px;
     }
-    #sign_up_form div input {
+    .sign_up_form div input, .sign_in_form div input{
         margin: 20px;
         width: 170px;
     }
@@ -104,3 +107,9 @@ header {
     margin-top: 2px;
 }
 /* end of drop down */
+
+.message {
+    text-align: center;
+    font-size: 24px;
+    color: red;
+}
