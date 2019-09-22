@@ -9,25 +9,58 @@ header {
     flex-wrap: wrap;
     height: 60px;
 }
-.logo {
+/* .logo {
     height: inherit;
     outline: red 2px solid;
-    width: 150px;
-}
+    width: 11%;
+} */
 .header_container {
-    transform: translateX(-50%);
     margin: auto;
 }
 .main_container {
+    width: inherit;
+}
+.sub_container{
     display: flex;
+    justify-content: center;
+    width: inherit;
+}
+#sign_up_form {
+    display: none;
+    justify-content: right;
+    align-items: center;
+    margin: auto;
+    flex-wrap: wrap;
+    width: 400px;
+}
+.small_text {
+    margin: 30px;
+    width: 200px;
+    height: 25px;
+    text-align: center;
+    border-radius: 1px;
+    outline: none;
+}
+.small_text:focus {
+    border-radius: 6px;
+    box-shadow: 3px 6px #888888; 
+}
+@media only screen and (max-width: 740px){
+    #sign_up_form {
+        width: 360px;
+    }
+    #sign_up_form div input {
+        margin: 20px;
+        width: 170px;
+    }
 }
 /* drop down */
 .dropdown {
     position: relative;
     background-color: #666666;
-    width: 268px;  
-    margin: auto;
+    width: 268px;
     display: inline-block;
+    margin: 0px 0px 30px 0px;
 }
 .dropbtn {
     transition: 0.8s;

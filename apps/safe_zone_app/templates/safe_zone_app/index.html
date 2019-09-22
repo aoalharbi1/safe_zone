@@ -6,19 +6,64 @@
     <title>Safe Zone</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script>
+        $("document").ready(function () {
+            $("#sign_up").click(function () {
+                $("#sign_up_form").css("display", "flex");
+            })
+            $("#sign_in").click(function () {
+                $("#sign_up_form").hide()
+            })
+        })
+    </script>
+    
 </head>
 
 <body>
     {% include "safe_zone_app/header.html" %}
 
     <div class="main_container">
-        <nav class="dropdown">
-            <div class="dropbtn">Menu</div>
-            <div class="dropdown_content">
-                <span id="admin">Sign up</span>
-                <span id="users">Sign in</span>
+        <div class="sub_container">
+            <nav class="dropdown">
+                <div class="dropbtn">Menu</div>
+                <div class="dropdown_content">
+                    <span id="sign_up">
+                        Sign up
+                    </span>
+                    <span id="sign_in">
+                        Sign in
+                    </span>
+                </div>
+            </nav>
+        </div>
+
+        <form id="sign_up_form" action="#" method="post">
+            <div>
+                First Name: <input class="small_text" type="text" name="first_name" required>
             </div>
-        </nav>
+            <div>
+                Last Name: <input class="small_text" type="text" name="last_name" required>
+            </div>
+            <div>
+                Email: <input class="small_text" type="email" name="email" required>
+            </div>
+            <div>
+                Secret Question: <input class="small_text" type="text" name="secret_question" required>
+            </div>
+            <div>
+                Secret Answer: <input class="small_text" type="text" name="secret_answer" required>
+            </div>
+            <div>
+                Password: <input class="small_text" type="password" name="password" required>
+            </div>
+            <div>
+                Confirm Password: <input class="small_text" type="password" name="confirm_password" required>
+            </div>
+            <div>
+                <input type="button" value="Submit">
+            </div>
+        </form>
     </div>
 </body>
 
