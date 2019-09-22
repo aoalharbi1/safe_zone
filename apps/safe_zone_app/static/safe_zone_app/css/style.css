@@ -105,7 +105,7 @@ header {
     color: red;
 }
 
-input[type=text], select, textarea {
+input[type=text], input[type=password], input[type=email] {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -149,8 +149,12 @@ input[type=text], select, textarea {
   }
   
   @media screen and (max-width: 600px) {
-    .col-25, .col-75, input[type=submit] {
+    .col-25, .col-75 {
       width: 100%;
       margin-top: 0;
+    }
+    input[type=submit] {
+        width: 100%;
+        margin-top: 8px;
     }
   }
