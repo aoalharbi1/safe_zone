@@ -1,4 +1,4 @@
-user_1 = User.objects.create(first_name = "John", last_name = "Smith", password = "ggg", email = "John@gmail.com", secret_question = "How are you ?", secret_answer = "Fine, thank you")
+user_1 = User.objects.create(first_name = "John", last_name = "Smith", password = "$2b$12$Wdc2qwiP6u0WdQdKwmer7.DMIcY6q76GxvrJgaodnpRDmpP8mwkDa", email = "John@gmail.com", secret_question = "How are you ?", secret_answer = "Fine, thank you")
 msg_1 = Message.objects.create(message = "Hello admin", user = User.objects.get(email = "John@gmail.com"))
 msg_2 = Message.objects.create(message = "Hello sir", user = User.objects.get(email = "John@gmail.com"))
 
