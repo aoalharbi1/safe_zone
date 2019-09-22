@@ -12,6 +12,12 @@ def validate(request):
         email = request.POST['email']
         user = User.objects.get(email=email) 
         password = request.POST['password']
+        user_pass = user.password
+
+        if bcrypt.checkpw(password.encode(), user_pass.encode()):
+            print("password match")
+        else:
+            print("failed password")
     except:
         request.session['message'] = "Email not registered!"
         return redirect("/")
