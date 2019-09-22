@@ -11,11 +11,11 @@
         $("document").ready(function () {
             $("#sign_up").click(function () {
                 $(".sign_in_form").hide();
-                $(".sign_up_form").css("display", "flex");
+                $(".sign_up_form").css("display", "block");
             })
             $("#sign_in").click(function () {
                 $(".sign_up_form").hide();
-                $(".sign_in_form").css("display", "flex");
+                $(".sign_in_form").css("display", "block");
             })
         })
     </script>
@@ -25,7 +25,7 @@
 <body>
     {% include "safe_zone_app/header.html" %}
 
-    <div class="main_container">
+    <div class="container">
         <div class="sub_container">
             <nav class="dropdown">
                 <div class="dropbtn">Menu</div>
@@ -40,49 +40,97 @@
             </nav>
         </div>
         {% if request.session.message != "" %}
-            <div class="message">
-                {{request.session.message}}
-            </div>
+        <div class="message">
+            {{request.session.message}}
+        </div>
         {% endif %}
 
         <form class="sign_up_form" action="#" method="post">
             {% csrf_token %}
-            <div>
-                First Name: <input class="small_text" type="text" name="first_name" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="fname">First Name:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="fname" name="first_name" placeholder="Your First name..." required>
+                </div>
             </div>
-            <div>
-                Last Name: <input class="small_text" type="text" name="last_name" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="lname">Last Name:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="lname" name="last_name" placeholder="Your Last name..." required>
+                </div>
             </div>
-            <div>
-                Email: <input class="small_text" type="email" name="email" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="email">Email:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="email" name="email" placeholder="Your Email..." required>
+                </div>
             </div>
-            <div>
-                Secret Question: <input class="small_text" type="text" name="secret_question" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="password">Password:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="password" name="password" placeholder="Your Password..." required>
+                </div>
             </div>
-            <div>
-                Secret Answer: <input class="small_text" type="text" name="secret_answer" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="confirm_password">Repeat Password:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="confirm_password" name="confirm_password"
+                        placeholder="Repeat Your Password..." required>
+                </div>
             </div>
-            <div>
-                Password: <input class="small_text" type="password" name="password" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="secret_question">Secret Question:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="secret_question" name="secret_question"
+                        placeholder="Secret Question to reset your password" required>
+                </div>
             </div>
-            <div>
-                Confirm Password: <input class="small_text" type="password" name="confirm_password" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="secret_answer">Secret Answer:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="secret_answer" name="secret_answer"
+                        placeholder="Secret Answer to reset your password" required>
+                </div>
             </div>
-            <div>
+            <div class="row">
                 <input type="submit" value="Submit">
             </div>
         </form>
 
         <form class="sign_in_form" action="/sign_in" method="post">
             {% csrf_token %}
-            <div>
-                Email: <input class="small_text" type="email" name="email" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="email">Email:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="email" name="email" placeholder="Your Email..." required>
+                </div>
             </div>
-            <div>
-                Password: <input class="small_text" type="password" name="password" required>
+            <div class="row">
+                <div class="col-25">
+                    <label for="password">Password:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="password" name="password" placeholder="Your Password..." required>
+                </div>
             </div>
-            <div>
-                <input class="btn" type="submit" value="Submit">
+            <div class="row">
+                <input type="submit" value="Submit">
             </div>
         </form>
     </div>

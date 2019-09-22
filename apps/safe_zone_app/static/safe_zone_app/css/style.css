@@ -3,60 +3,44 @@
     margin: 0px;
     box-sizing: border-box;
 }
+
 header {
     display: flex;
     width: inherit;
     flex-wrap: wrap;
     height: 60px;
 }
+
 /* .logo {
     height: inherit;
     outline: red 2px solid;
     width: 11%;
 } */
+
 .header_container {
     margin: auto;
 }
-.main_container {
-    width: inherit;
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
 }
+
 .sub_container{
     display: flex;
     justify-content: center;
     width: inherit;
 }
+
 .sign_up_form, .sign_in_form{
     display: none;
-    justify-content: right;
-    align-items: center;
-    margin: auto;
-    flex-wrap: wrap;
-    width: 400px;
 }
-.btn {
-    margin: 0px 0px 0px 25px;
-}
-.small_text {
-    margin: 30px;
-    width: 200px;
-    height: 25px;
-    text-align: center;
-    border-radius: 1px;
-    outline: none;
-}
+
 .small_text:focus {
-    border-radius: 6px;
     box-shadow: 3px 6px #888888; 
 }
-@media only screen and (max-width: 740px){
-    .sign_up_form, .sign_in_form{
-        width: 360px;
-    }
-    .sign_up_form div input, .sign_in_form div input{
-        margin: 20px;
-        width: 170px;
-    }
-}
+
 /* drop down */
 .dropdown {
     position: relative;
@@ -65,6 +49,7 @@ header {
     display: inline-block;
     margin: 0px 0px 30px 0px;
 }
+
 .dropbtn {
     transition: 0.8s;
     background-color: #666666;
@@ -76,6 +61,7 @@ header {
     text-align: center;
     font-size: 28px;
 }
+
 .dropdown_content {
     display: none;
     position: absolute;
@@ -84,6 +70,7 @@ header {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,1);
     z-index: 1;
 }
+
 .dropdown_content span {
     color: black;
     padding: 12px 16px;
@@ -92,17 +79,21 @@ header {
     text-align: center;
     color: white;
 }
+
 .dropdown_content span:hover {
     background-color: #595959;
     cursor: pointer;
 }
+
 .dropdown:hover .dropdown_content {
     display: block;
 }
+
 .dropdown:hover .dropbtn {
     background-color: #404040;
     padding: 24px 10px;
 }
+
 .dropdown:hover {
     margin-top: 2px;
 }
@@ -113,3 +104,53 @@ header {
     font-size: 24px;
     color: red;
 }
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+  }
+  
+  input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  .col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+  }
+  
+  .col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+  }
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+      width: 100%;
+      margin-top: 0;
+    }
+  }
