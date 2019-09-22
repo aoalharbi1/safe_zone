@@ -10,14 +10,16 @@
     <script>
         $("document").ready(function () {
             $("#sign_up").click(function () {
-                $("#sign_up_form").css("display", "flex");
+                $(".sign_in_form").hide();
+                $(".sign_up_form").css("display", "flex");
             })
             $("#sign_in").click(function () {
-                $("#sign_up_form").hide()
+                $(".sign_up_form").hide();
+                $(".sign_in_form").css("display", "flex");
             })
         })
     </script>
-    
+
 </head>
 
 <body>
@@ -37,8 +39,14 @@
                 </div>
             </nav>
         </div>
+        {% if request.session.message != "" %}
+            <div class="message">
+                {{request.session.message}}
+            </div>
+        {% endif %}
 
-        <form id="sign_up_form" action="#" method="post">
+        <form class="sign_up_form" action="#" method="post">
+            {% csrf_token %}
             <div>
                 First Name: <input class="small_text" type="text" name="first_name" required>
             </div>
@@ -61,7 +69,20 @@
                 Confirm Password: <input class="small_text" type="password" name="confirm_password" required>
             </div>
             <div>
-                <input type="button" value="Submit">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+
+        <form class="sign_in_form" action="/sign_in" method="post">
+            {% csrf_token %}
+            <div>
+                Email: <input class="small_text" type="email" name="email" required>
+            </div>
+            <div>
+                Password: <input class="small_text" type="password" name="password" required>
+            </div>
+            <div>
+                <input class="btn" type="submit" value="Submit">
             </div>
         </form>
     </div>
