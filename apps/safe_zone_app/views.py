@@ -15,6 +15,5 @@ def validate(request):
     except:
         request.session['message'] = "Email not registered!"
         return redirect("/")
-
-    # bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+        
     return HttpResponse(user.first_name, user.last_name)
