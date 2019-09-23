@@ -3,6 +3,7 @@ import bcrypt
 from . models import *
 import re
 
+
 def index(request):
 
     if 'message' not in request.session:
