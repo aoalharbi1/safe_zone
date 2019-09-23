@@ -66,7 +66,7 @@ def validate(request):
 def user_in(request):
     if 'email' not in request.session:
         return redirect("/")
-    
+
     email = request.session['email']
     user = User.objects.get(email=email)
     reports = user.reports.all()
@@ -120,24 +120,35 @@ def registration(request):
 
     return redirect("/")
 
+
 def admin(request):
     if 'email' not in request.session or 'admin' not in request.session:
         return redirect("/")
 
     if request.session['admin'] != True:
         return redirect("/sign_out")
-    
+
     context = {
-        "all_users": User.objects.all(),
+        # all users stores a set of values orderd as bellow,
+        "all_users": User.objects.values_list('id', 'first_name', 'last_name', 'email'),
         "all_messages": Message.objects.all(),
     }
     return render(request, 'safe_zone_app/admin_page.html', context)
 
+
 def show_user_info(request, user_id):
-    return HttpResponse(f"this is user number {user_id}")
+    context = {
+        "all_reports": User.objects.get(id=user_id).reports.all(),
+        "user_first_name": User.objects.get(id = user_id).first_name,
+        "user_last_name": User.objects.get(id = user_id).last_name,
+        "user_email": User.objects.get(id = user_id).email,
+        "user_id": user_id
+    }
+    
+    return render(request, 'safe_zone_app/user_info.html', context)
 
 
-def send_message(request , user_id):
+def send_message(request, user_id):
     msgTxt = request.POST['user_message']
-    Message.objects.create(message = msgTxt, user = User.objects.get(id = user_id))
+    Message.objects.create(message=msgTxt, user=User.objects.get(id=user_id))
     return redirect("/user_in")
