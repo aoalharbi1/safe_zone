@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Safe Zone</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
+    <title>Safe Zone</title>
+    <script>
+        $("document").ready(function () {
+            $("#sign_out").click(function () {
+                var url = "/sign_out";
+                $(location).attr('href', url);
+            })
+        })
+    </script>
+</head>
+
+<body>
+    {% include "safe_zone_app/header.html" %}
+
+    <div class="container">
+        <div class="sub_container">
+            <nav class="dropdown">
+                <div class="dropbtn">Menu</div>
+                <div class="dropdown_content">
+                    <span id="edit">
+                        Edit profile
+                    </span>
+                    <span id="sign_out">
+                        Sign out
+                    </span>
+                </div>
+            </nav>
+        </div>
+    </div>
+</body>
+
+</html>
