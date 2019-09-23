@@ -137,7 +137,7 @@ def show_user_info(request, user_id):
     return HttpResponse(f"this is user number {user_id}")
 
 
-def send_massege(request , user_id):
+def send_message(request , user_id):
     msgTxt = request.POST['user_message']
     Message.objects.create(message = msgTxt, user = User.objects.get(id = user_id))
     return redirect("/user_in")

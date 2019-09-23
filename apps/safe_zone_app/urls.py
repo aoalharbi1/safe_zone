@@ -5,7 +5,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^validate$', views.validate),
     url(r'^user_in$', views.user_in),
-    url(r'^user_in/massege_sent/(?P<user_id>\d+)$', views.send_massege),
+    url(r'^user_in/message_sent/(?P<user_id>\d+)$', views.send_message),
     url(r'^sign_out$', views.sign_out),
     url(r'^sign_up$', views.registration),
     url(r'^admin$', views.admin),
