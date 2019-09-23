@@ -7,12 +7,16 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-    <title>Safe Zone</title>
     <script>
         $("document").ready(function () {
             $("#sign_out").click(function () {
                 var url = "/sign_out";
                 $(location).attr('href', url);
+            })        
+            $("#direct_message").click(function () {
+                $(".user_reports_messages").hide();
+                $(".notification").hide()
+                $(".send_message").css("display", "block");
             })
         })
     </script>
@@ -32,6 +36,9 @@
                     <span id="sign_out">
                         Sign out
                     </span>
+                    <span id="direct_message">
+                        Send a message to the admin
+                    </span>
                 </div>
             </nav>
         </div>
@@ -41,7 +48,7 @@
                 Welcome {{request.session.first_name}} {{request.session.last_name}}
             </h1>
         </div>
-        <div class="row">
+        <div class="row user_reports_messages">
             <div class="reports">
             {% for report in reports %}
                 <p>
@@ -55,6 +62,11 @@
                         Message: {{message.message}} <br> Sent at {{message.created_at}}     
                     </p>
                 {% endfor %}
+            </div>
+        </div>
+        <div class="send_message">
+            <div class="row">
+                <input type="text" name="user_message" id="user_message" placeholder="Please write your message here..." >
             </div>
         </div>
     </div>

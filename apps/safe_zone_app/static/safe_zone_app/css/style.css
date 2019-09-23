@@ -112,14 +112,14 @@ input[type=text], input[type=password], input[type=email] {
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
-  }
+}
   
-  label {
+label {
     padding: 12px 12px 12px 0;
     display: inline-block;
-  }
+}
   
-  input[type=submit] {
+input[type=submit] {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -127,55 +127,44 @@ input[type=text], input[type=password], input[type=email] {
     border-radius: 4px;
     cursor: pointer;
     float: right;
-  }
+}
   
-  input[type=submit]:hover {
+input[type=submit]:hover {
     background-color: #45a049;
-  }
-  .col-25 {
+}
+.col-25 {
     float: left;
     width: 25%;
     margin-top: 6px;
-  }
+}
   
-  .col-75 {
+.col-75 {
     float: left;
     width: 75%;
     margin-top: 6px;
-  }
-  .row:after {
+}
+.row:after {
     content: "";
     display: table;
     clear: both;
-  }
-  
-  @media screen and (max-width: 600px) {
-    .col-25, .col-75 {
-      width: 100%;
-      margin-top: 0;
-    }
-    input[type=submit] {
-        width: 100%;
-        margin-top: 8px;
-    }
-  }
+}
 
-  .welcome {
+.welcome {
       text-align: center;
-  }
+}
 
-  .reports {
-      overflow: scroll;
-      float: left;
-      height: 15em;
-      width: 40%;
-      background-color: white;
-      border: #404040 1px solid;
-      margin: 10px;
-      padding: 5px 0px 0px 8px;
-  }
+.reports {
+    overflow: scroll;
+    float: left;
+    height: 15em;
+    width: 40%;
+    background-color: white;
+    border: #404040 1px solid;
+    margin: 10px;
+    padding: 5px 0px 0px 8px;
+}
 
-  .messages {
+.messages {
     overflow: scroll;
     float: right;
     height: 15em;
@@ -184,8 +173,53 @@ input[type=text], input[type=password], input[type=email] {
     border: #404040 1px solid;
     margin: 10px;
     padding: 0px 0px 0px 8px;
-  }
+}
 
-  .messages p {
-      margin: 5px 0px 0px 0px;
-  }
+.messages p {
+    margin: 5px 0px 0px 0px;
+}
+
+.choices{
+    display: flex;
+    justify-content: center;
+}
+
+.choices div {
+    margin: 0px 0px 0px 57px;
+}
+
+.users {
+    overflow: scroll;
+    float: left;
+    height: 15em;
+    width: 40%;
+    background-color: white;
+    border: #404040 1px solid;
+    margin: 10px;
+    padding: 5px 0px 0px 8px;
+}
+
+.send_message {
+    display: none;
+    margin: 10px;
+}
+
+#user_message {
+    height: 10em;
+    text-align: left;
+    vertical-align: top;
+}
+
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, .messages, .reports, .users{
+      width: 100%;
+      margin-top: 0;
+    }
+    .reports, .users {
+        float: right;
+    }
+    input[type=submit] {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
