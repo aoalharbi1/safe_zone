@@ -14,23 +14,52 @@ def index(request):
 
 def validate(request):
     try:
-        email = request.POST['email']
-        user = User.objects.get(email=email)
-        form_password = request.POST['password']
-        user_pass = user.password
-
-        if bcrypt.checkpw(form_password.encode(), user_pass.encode()):
-            request.session['first_name'] = user.first_name
-            request.session['last_name'] = user.last_name
-            request.session['email'] = user.email
-            # request.session['reports'] = user.reports
-            request.session['message'] = ""
-            return redirect("/user_in")
-        else:
-            request.session['message'] = "Check the email and password and try again"
-            return redirect("/")
+        choice = request.POST['choice']
     except:
-        request.session['message'] = "Email not registered!"
+        request.session['message'] = "Please pick a choice to sign in as an admin, or a user"
+        return redirect("/")
+
+    if choice == "admin":
+        try:
+            email = request.POST['email']
+            admin = Admin.objects.get(email=email)
+            form_password = request.POST['password']
+            admin_pass = admin.password
+
+            if bcrypt.checkpw(form_password.encode(), admin_pass.encode()):
+                request.session['first_name'] = admin.first_name
+                request.session['last_name'] = admin.last_name
+                request.session['email'] = admin.email
+                request.session['admin'] = True
+                return redirect("/admin")
+            else:
+                request.session['message'] = "Check the email and password and try again"
+                return redirect("/")
+        except:
+            request.session['message'] = "Email not registered!"
+            return redirect("/")
+
+    elif choice == "user":
+        try:
+            email = request.POST['email']
+            user = User.objects.get(email=email)
+            form_password = request.POST['password']
+            user_pass = user.password
+
+            if bcrypt.checkpw(form_password.encode(), user_pass.encode()):
+                request.session['first_name'] = user.first_name
+                request.session['last_name'] = user.last_name
+                request.session['email'] = user.email
+                request.session['message'] = ""
+                return redirect("/user_in")
+            else:
+                request.session['message'] = "Check the email and password and try again"
+                return redirect("/")
+        except:
+            request.session['message'] = "Email not registered!"
+            return redirect("/")
+    else:
+        request.session['message'] = "Please pick a choice to sign in as an admin, or a user"
         return redirect("/")
 
 
@@ -91,6 +120,12 @@ def registration(request):
     return redirect("/")
 
 def admin(request):
+    if 'email' not in request.session or 'admin' not in request.session:
+        return redirect("/")
+
+    if request.session['admin'] != True:
+        return redirect("/sign_out")
+    
     context = {
         "all_users": User.objects.all(),
         "all_messages": Message.objects.all(),
