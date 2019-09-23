@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script>
+        $("document").ready(function () {
+            $("#sign_out").click(function () {
+                var url = "/sign_out";
+                $(location).attr('href', url);
+            })
+        })
+    </script>
+</head>
+
+<body>
+    {% include "safe_zone_app/header.html" %}
+
+    <div class="container">
+        <div class="sub_container">
+            <nav class="dropdown">
+                <div class="dropbtn">Menu</div>
+                <div class="dropdown_content">
+                    <span id="edit">
+                        Edit profile
+                    </span>
+                    <span id="sign_out">
+                        Sign out
+                    </span>
+                </div>
+            </nav>
+        </div>
+
+        <div class="row">
+            <h1 class="welcome">
+                Welcome {{request.session.first_name}} {{request.session.last_name}}
+            </h1>
+        </div>
+
+        <div class="row">
+            <h2>All users </h2>
+            <div class="users">
+                {% for user in all_users %}
+                <p>{{ user.first_name }} ||
+                    {{ user.last_name }} ||
+                    {{ user.email }}
+                    <a href="admin/show_user/{{user.id}}">view</a>
+                </p>
+                {% endfor %}
+            </div>
+            <div class="messages">
+                {% for one_message in all_messages %}
+                <p>{{ one_message.user.first_name }} SENT THIS MESSAGE: {{ one_message.message }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

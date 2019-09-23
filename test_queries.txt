@@ -17,4 +17,4 @@ u1_report_companies.companies.values()
 
 user_1.delete() # This will delete the user and all of their their details
 
-admin_1 = Admin.objects.create(first_name = "John", password = "fff", last_name = "Smith", email = "John@gmail.com")
+admin_1 = Admin.objects.create(first_name = "test", password = "$2b$12$Wdc2qwiP6u0WdQdKwmer7.DMIcY6q76GxvrJgaodnpRDmpP8mwkDa", last_name = "Smith", email = "test1@gmail.com")

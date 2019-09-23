@@ -11,10 +11,12 @@
         $("document").ready(function () {
             $("#sign_up").click(function () {
                 $(".sign_in_form").hide();
+                $(".notification").hide()
                 $(".sign_up_form").css("display", "block");
             })
             $("#sign_in").click(function () {
                 $(".sign_up_form").hide();
+                $(".notification").hide()
                 $(".sign_in_form").css("display", "block");
             })
         })
@@ -40,12 +42,12 @@
             </nav>
         </div>
         {% if request.session.message != "" %}
-        <div class="message">
+        <div class="notification">
             {{request.session.message}}
         </div>
         {% endif %}
 
-        <form class="sign_up_form" action="#" method="post">
+        <form class="sign_up_form" action="/sign_up" method="post">
             {% csrf_token %}
             <div class="row">
                 <div class="col-25">
@@ -84,7 +86,7 @@
                     <label for="confirm_password">Repeat Password:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="confirm_password" name="confirm_password"
+                    <input type="password" id="confirm_password" name="confirm_password"
                         placeholder="Repeat Your Password..." required>
                 </div>
             </div>
@@ -111,7 +113,7 @@
             </div>
         </form>
 
-        <form class="sign_in_form" action="/sign_in" method="post">
+        <form class="sign_in_form" action="/validate" method="post">
             {% csrf_token %}
             <div class="row">
                 <div class="col-25">
@@ -127,6 +129,18 @@
                 </div>
                 <div class="col-75">
                     <input type="password" id="password" name="password" placeholder="Your Password..." required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="choices">
+                    <div>
+                        <label for="admin">Admin:</label>
+                        <input type="radio" name="choice" id="admin" value="admin">
+                    </div>
+                    <div>
+                        <label for="user">User:</label>
+                        <input type="radio" name="choice" id="user" value="user">
+                    </div>
                 </div>
             </div>
             <div class="row">
