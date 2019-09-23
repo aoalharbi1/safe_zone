@@ -3,26 +3,71 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>User Info</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script>
+        $("document").ready(function () {
+            $("#sign_out").click(function () {
+                var url = "/sign_out";
+                $(location).attr('href', url);
+            })
+        })
+    </script>
+</head>
 </head>
 
 <body>
-    <div>
-        User:
-        <h1>{{user_first_name}} {{user_last_name}}</h1>
-        <h2>{{user_id}}</h2>
-        <h3>{{user_email}}</h3>
-    </div>
-        Reports:
-    <div>
-        {% for report in all_reports %}
-        <a href="#">This is report number {{report.id}},
-            click here to view
-        </a>
-        <br>
-        {% endfor %}
+    {% include "safe_zone_app/header.html" %}
+    <div class="container">
+        <div class="sub_container">
+            <nav class="dropdown">
+                <div class="dropbtn">Menu</div>
+                <div class="dropdown_content">
+                    <span id="edit">
+                        Edit profile
+                    </span>
+                    <span id="sign_out">
+                        Sign out
+                    </span>
+                </div>
+            </nav>
+        </div>
+        <div class="row user_info_container">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="user_info">
+                            Name: {{user_first_name}} {{user_last_name}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="user_info">
+                            User ID: {{user_id}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="user_info">
+                            User Email: {{user_email}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="user_reports_in_admin">
+            <div class="reports">
+                <p class="pad_5_center">
+                    User reports:
+                </p>
+                {% for report in all_reports %}
+                <a href="#">This is report number {{report.id}},
+                    click here to view
+                </a>
+                <br>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </body>
 

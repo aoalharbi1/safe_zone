@@ -205,8 +205,35 @@ input[type=submit]:hover {
     vertical-align: top;
 }
 
+.pad_5_center{
+    padding: 5px;
+    text-align: center;
+}
+
+.user_reports_in_admin {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0px 0px 0px;
+}
+
+.user_reports_in_admin .reports {
+    text-align: center;
+    width: 80%;
+}
+
+.user_info_container {
+    display: flex;
+    justify-content: center;
+}
+
+.user_info {
+    font-size: 19px;
+    font-weight: 700;
+    padding: 7px 0px 0px 0px;
+}
+
 @media screen and (max-width: 600px) {
-    .col-25, .col-75, .messages, .reports, .users{
+    .col-25, .col-75, .messages, .reports, .users, .user_reports_in_admin .reports{
       width: 100%;
       margin-top: 0;
     }
