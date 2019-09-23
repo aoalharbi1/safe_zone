@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 import bcrypt
 from . models import *
+import re
 
 def index(request):
     if 'message' not in request.session:
@@ -26,3 +27,27 @@ def validate(request):
     except:
         request.session['message'] = "Email not registered!"
         return redirect("/")
+
+def registeration(request):
+    names_pattern = re.compile(r'^[a-zA-Z]+$')
+    password_pattern = re.compile(r'^(?=.*\d)(?=.*[A-Za-z])(?=.*[^\w\d\s:])([^\s]){8,}$')
+
+    if (not names_pattern.match(request.POST['first_name']) or not names_pattern.match(request.POST['last_name'])):
+        request.session['message'] = "First name and last name must be alphabetic only"
+        return redirect("/")
+
+    if(not password_pattern.match(request.POST['password'])):
+        request.session['message'] = "Password must be at least 8 characters, with at least one number and at least on special character"
+        return redirect("/")
+    
+    hashed_password = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
+    hashed_answer = bcrypt.hashpw(request.POST['secret_answer'].encode(), bcrypt.gensalt())
+    
+    request.session['message'] = ""
+    new_user = User.objects.create(first_name = request.POST['first_name'], 
+    last_name = request.POST['last_name'], 
+    password = hashed_password, 
+    email = request.POST['email'], 
+    secret_question = request.POST['secret_question'], 
+    secret_answer = hashed_answer)
+    return redirect("/")
