@@ -64,7 +64,8 @@
                 {% endfor %}
             </div>
         </div>
-        <form action="#" method="post">
+        <form action="user_in/massege_sent/{{user.id}}" method="post">
+            {% csrf_token %}
             <div class="send_message">
                 <div class="row">
                     <input type="text" name="user_message" id="user_message"
