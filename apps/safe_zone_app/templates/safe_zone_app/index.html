@@ -11,10 +11,12 @@
         $("document").ready(function () {
             $("#sign_up").click(function () {
                 $(".sign_in_form").hide();
+                $(".message").hide()
                 $(".sign_up_form").css("display", "block");
             })
             $("#sign_in").click(function () {
                 $(".sign_up_form").hide();
+                $(".message").hide()
                 $(".sign_in_form").css("display", "block");
             })
         })
@@ -111,7 +113,7 @@
             </div>
         </form>
 
-        <form class="sign_in_form" action="/sign_in" method="post">
+        <form class="sign_in_form" action="/validate" method="post">
             {% csrf_token %}
             <div class="row">
                 <div class="col-25">
