@@ -143,8 +143,8 @@ def show_user_info(request, user_id):
         "user_last_name": User.objects.get(id = user_id).last_name,
         "user_email": User.objects.get(id = user_id).email,
         "user_id": user_id
-
     }
+    
     return render(request, 'safe_zone_app/user_info.html', context)
 
 
