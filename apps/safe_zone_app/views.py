@@ -89,3 +89,13 @@ def registration(request):
                                    secret_answer=hashed_answer)
 
     return redirect("/")
+
+def admin(request):
+    context = {
+        "all_users": User.objects.all(),
+        "all_messages": Message.objects.all(),
+    }
+    return render(request, 'safe_zone_app/admin_page.html', context)
+
+def show_user_info(request, user_id):
+    return HttpResponse(f"this is user number {user_id}")
