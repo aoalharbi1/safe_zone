@@ -23,6 +23,7 @@ def validate(request):
             request.session['first_name'] = user.first_name
             request.session['last_name'] = user.last_name
             request.session['email'] = user.email
+            # request.session['reports'] = user.reports
             request.session['message'] = ""
             return redirect("/user_in")
         else:
@@ -36,6 +37,8 @@ def validate(request):
 def user_in(request):
     if 'email' not in request.session:
         return redirect("/")
+    
+    
     return render(request, "safe_zone_app/user_in.html")
 
 
@@ -45,6 +48,7 @@ def sign_out(request):
         del request.session['email']
         del request.session['first_name']
         del request.session['last_name']
+        del request.session['reports']
 
     except:
         pass
