@@ -12,7 +12,7 @@
             $("#sign_out").click(function () {
                 var url = "/sign_out";
                 $(location).attr('href', url);
-            })        
+            })
             $("#direct_message").click(function () {
                 $(".user_reports_messages").hide();
                 $(".notification").hide()
@@ -50,25 +50,31 @@
         </div>
         <div class="row user_reports_messages">
             <div class="reports">
-            {% for report in reports %}
+                {% for report in reports %}
                 <p>
-                    {{report}}     
+                    {{report}}
                 </p>
-            {% endfor %}
+                {% endfor %}
             </div>
             <div class="messages">
                 {% for message in messages %}
-                    <p>
-                        Message: {{message.message}} <br> Sent at {{message.created_at}}     
-                    </p>
+                <p>
+                    Message: {{message.message}} <br> Sent at {{message.created_at}}
+                </p>
                 {% endfor %}
             </div>
         </div>
-        <div class="send_message">
-            <div class="row">
-                <input type="text" name="user_message" id="user_message" placeholder="Please write your message here..." >
+        <form action="#" method="post">
+            <div class="send_message">
+                <div class="row">
+                    <input type="text" name="user_message" id="user_message"
+                        placeholder="Please write your message here...">
+                </div>
+                <div class="row">
+                    <input type="submit" value="Submit">
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </body>
 
