@@ -38,8 +38,15 @@ def user_in(request):
     if 'email' not in request.session:
         return redirect("/")
     
-    
-    return render(request, "safe_zone_app/user_in.html")
+    email = request.session['email']
+    user = User.objects.get(email=email)
+    reports = user.reports.all()
+    messages = user.messages.all()
+    context = {
+        'reports': reports,
+        'messages': messages
+    }
+    return render(request, "safe_zone_app/user_in.html", context)
 
 
 def sign_out(request):

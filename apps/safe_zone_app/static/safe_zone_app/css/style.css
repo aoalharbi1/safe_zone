@@ -25,6 +25,7 @@ header {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
+    min-height: 500px;
 }
 
 .sub_container{
@@ -99,7 +100,7 @@ header {
 }
 /* end of drop down */
 
-.message {
+.notification {
     text-align: center;
     font-size: 24px;
     color: red;
@@ -161,4 +162,30 @@ input[type=text], input[type=password], input[type=email] {
 
   .welcome {
       text-align: center;
+  }
+
+  .reports {
+      overflow: scroll;
+      float: left;
+      height: 15em;
+      width: 40%;
+      background-color: white;
+      border: #404040 1px solid;
+      margin: 10px;
+      padding: 5px 0px 0px 8px;
+  }
+
+  .messages {
+    overflow: scroll;
+    float: right;
+    height: 15em;
+    width: 40%;
+    background-color: white;
+    border: #404040 1px solid;
+    margin: 10px;
+    padding: 0px 0px 0px 8px;
+  }
+
+  .messages p {
+      margin: 5px 0px 0px 0px;
   }
