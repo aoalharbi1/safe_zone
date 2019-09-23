@@ -41,6 +41,22 @@
                 Welcome {{request.session.first_name}} {{request.session.last_name}}
             </h1>
         </div>
+        <div class="row">
+            <div class="reports">
+            {% for report in reports %}
+                <p>
+                    {{report}}     
+                </p>
+            {% endfor %}
+            </div>
+            <div class="messages">
+                {% for message in messages %}
+                    <p>
+                        Message: {{message.message}} <br> Sent at {{message.created_at}}     
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </body>
 
