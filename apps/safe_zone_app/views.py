@@ -139,12 +139,12 @@ def admin(request):
 def show_user_info(request, user_id):
     context = {
         "all_reports": User.objects.get(id=user_id).reports.all(),
-        "user_first_name": User.objects.get(id = user_id).first_name,
-        "user_last_name": User.objects.get(id = user_id).last_name,
-        "user_email": User.objects.get(id = user_id).email,
+        "user_first_name": User.objects.get(id=user_id).first_name,
+        "user_last_name": User.objects.get(id=user_id).last_name,
+        "user_email": User.objects.get(id=user_id).email,
         "user_id": user_id
     }
-    
+
     return render(request, 'safe_zone_app/user_info.html', context)
 
 
@@ -152,3 +152,21 @@ def send_message(request, user_id):
     msgTxt = request.POST['user_message']
     Message.objects.create(message=msgTxt, user=User.objects.get(id=user_id))
     return redirect("/user_in")
+
+
+def admin_edit_user(request, user_id):
+    context = {
+        "user_first_name": User.objects.get(id=user_id).first_name,
+        "user_last_name": User.objects.get(id=user_id).last_name,
+        "user_email": User.objects.get(id=user_id).email,
+        "user_id": user_id,
+    }
+    return render(request, 'safe_zone_app/edit_user_info.html', context)
+
+def edit_info(request, user_id):
+    user_to_edit = User.objects.get(id = user_id)
+    user_to_edit.first_name = request.POST['first_name']
+    user_to_edit.last_name = request.POST['last_name']
+    user_to_edit.email = request.POST['email']
+    user_to_edit.save()
+    return redirect("/admin")

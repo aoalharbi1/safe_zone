@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^sign_up$', views.registration),
     url(r'^admin$', views.admin),
     url(r'^admin/show_user/(?P<user_id>\d+)$', views.show_user_info),
+    url(r'^admin/show_user/(?P<user_id>\d+)/edit$', views.admin_edit_user),
+    url(r'^edit_info/(?P<user_id>\d+)$', views.edit_info),
 ]
