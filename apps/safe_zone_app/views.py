@@ -170,3 +170,6 @@ def edit_info(request, user_id):
     user_to_edit.email = request.POST['email']
     user_to_edit.save()
     return redirect("/admin")
+
+
+
