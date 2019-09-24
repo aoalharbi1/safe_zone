@@ -210,6 +210,12 @@ def admin_show_report(request, user_id, report_id):
     }
     return render(request, 'safe_zone_app/reports.html', context)
 
+def delete_report(request):
+    delete_this = Report.objects.get(id = request.POST['report_id'])
+    user_id = request.POST['user_id']
+    delete_this.delete()
+
+    return redirect(f"/admin/show_user/{user_id}")
+
 def default_route(request):
     return HttpResponse("404 Bad request")
-

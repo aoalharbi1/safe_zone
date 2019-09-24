@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reports</title>
 </head>
+
 <body>
     <h1>Report number {{report.id}}</h1>
     <h2>{{report.md5}}</h2>
     <h2>{{report.sha1}}</h2>
     <h2>{{report.sha256}}</h2>
     <h2>{{report.is_safe}}</h2>
+    <h2>{{report.user.id}}</h2>
 
     <input type="button" value="Print as pdf">
     <input type="button" value="Send as email">
-    <input type="button" value="DELETE">
+
+    <form action="/report/delete" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="DELETE">
+        <input type="hidden" name="user_id" value="{{report.user.id}}">
+        <input type="hidden" name="report_id" value="{{report.id}}">
+    </form>
 </body>
+
 </html>
