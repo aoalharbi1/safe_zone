@@ -64,8 +64,8 @@
                     User reports:
                 </p>
                 {% for report in all_reports %}
+                this is report number {{report.id}}
                 <a href="/admin/show_user/{{user_id}}/report/{{report.id}}">
-                this is report number {{report.id}}</a>
                     click here to view
                 </a>
                 <br>

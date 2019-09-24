@@ -74,13 +74,13 @@ def user_in(request):
     context = {
         'user': user,
         'reports': reports,
-        'messages': messages
+        'messages': messages,
     }
     request.session['first_name'] = user.first_name
     request.session['last_name'] = user.last_name
     request.session['email'] = user.email
+    request.session['usr_id'] = user.id
 
-    
     return render(request, "safe_zone_app/user_in.html", context)
 
 
@@ -171,8 +171,9 @@ def admin_edit_user(request, user_id):
     }
     return render(request, 'safe_zone_app/edit_user_info.html', context)
 
+
 def edit_info(request, user_id):
-    user_to_edit = User.objects.get(id = user_id)
+    user_to_edit = User.objects.get(id=user_id)
     user_to_edit.first_name = request.POST['first_name']
     user_to_edit.last_name = request.POST['last_name']
     user_to_edit.email = request.POST['email']
@@ -181,25 +182,34 @@ def edit_info(request, user_id):
 
 
 def edit_user(request, user_id):
-    context = {
-        "user_first_name": User.objects.get(id=user_id).first_name,
-        "user_last_name": User.objects.get(id=user_id).last_name,
-        "user_email": User.objects.get(id=user_id).email,
-        "user_id": user_id,
-    }
-    return render(request, 'safe_zone_app/edit_my_profile.html', context)
+    if (request.session['usr_id'] == int(user_id)):
+        context = {
+            "user_first_name": User.objects.get(id=user_id).first_name,
+            "user_last_name": User.objects.get(id=user_id).last_name,
+            "user_email": User.objects.get(id=user_id).email,
+            "user_id": user_id,
+        }
+        return render(request, 'safe_zone_app/edit_my_profile.html', context)
+    return redirect("/sign_out")
 
 
 def edit_my_profile(request , user_id):
-    editMyProfile = User.objects.get(id = user_id)
-    editMyProfile.first_name = request.POST['first_name']
-    editMyProfile.last_name = request.POST['last_name']
-    editMyProfile.email = request.POST['email']
-    editMyProfile.save()
-    return redirect("/user_in")
+    if request.session['usr_id'] == int(user_id):
+        editMyProfile = User.objects.get(id = user_id)
+        editMyProfile.first_name = request.POST['first_name']
+        editMyProfile.last_name = request.POST['last_name']
+        editMyProfile.email = request.POST['email']
+        editMyProfile.save()
+        return redirect("/user_in")
+    return redirect("/sign_out")
+
 
 def admin_show_report(request, user_id, report_id):
     context = {
         "report": Report.objects.get(id=report_id)
     }
     return render(request, 'safe_zone_app/reports.html', context)
+
+def default_route(request):
+    return HttpResponse("404 Bad request")
+
