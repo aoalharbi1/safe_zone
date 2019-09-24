@@ -91,6 +91,7 @@ def sign_out(request):
         del request.session['first_name']
         del request.session['last_name']
         del request.session['reports']
+        del request.session['admin']
 
     except:
         pass
