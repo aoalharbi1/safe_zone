@@ -86,12 +86,14 @@ def user_in(request):
 
 def sign_out(request):
     try:
+        if 'admin' in request.session:
+            del request.session['admin']
+
         del request.session['message']
         del request.session['email']
         del request.session['first_name']
         del request.session['last_name']
         del request.session['reports']
-        del request.session['admin']
 
     except:
         pass
