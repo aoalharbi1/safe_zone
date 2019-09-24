@@ -76,6 +76,11 @@ def user_in(request):
         'reports': reports,
         'messages': messages
     }
+    request.session['first_name'] = user.first_name
+    request.session['last_name'] = user.last_name
+    request.session['email'] = user.email
+
+    
     return render(request, "safe_zone_app/user_in.html", context)
 
 
@@ -170,3 +175,22 @@ def edit_info(request, user_id):
     user_to_edit.email = request.POST['email']
     user_to_edit.save()
     return redirect("/admin")
+
+
+def edit_user(request, user_id):
+    context = {
+        "user_first_name": User.objects.get(id=user_id).first_name,
+        "user_last_name": User.objects.get(id=user_id).last_name,
+        "user_email": User.objects.get(id=user_id).email,
+        "user_id": user_id,
+    }
+    return render(request, 'safe_zone_app/edit_my_profile.html', context)
+
+
+def edit_my_profile(request , user_id):
+    editMyProfile = User.objects.get(id = user_id)
+    editMyProfile.first_name = request.POST['first_name']
+    editMyProfile.last_name = request.POST['last_name']
+    editMyProfile.email = request.POST['email']
+    editMyProfile.save()
+    return redirect("/user_in")
