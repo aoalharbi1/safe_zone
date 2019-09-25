@@ -56,7 +56,8 @@
             <div class="reports">
                 {% for report in reports %}
                 <p>
-                    {{report}}
+                    This is report number {{report.id}}
+                    <a href="user_in/reports/{{report.id}}"> view </a>
                 </p>
                 {% endfor %}
             </div>
