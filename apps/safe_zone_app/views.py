@@ -3,7 +3,7 @@ import bcrypt
 from . models import *
 import re
 
-
+# renderes the landing page for both admin/user
 def index(request):
 
     if 'message' not in request.session:
@@ -11,7 +11,7 @@ def index(request):
 
     return render(request, "safe_zone_app/index.html")
 
-
+# distinguish between user sign in and admin sign in
 def validate(request):
     try:
         choice = request.POST['choice']
@@ -62,26 +62,30 @@ def validate(request):
         request.session['message'] = "Please pick a choice to sign in as an admin, or a user"
         return redirect("/")
 
-
+# landing page for user when logged in
 def user_in(request):
     if 'email' not in request.session:
         return redirect("/")
 
-    email = request.session['email']
-    user = User.objects.get(email=email)
-    reports = user.reports.all()
-    messages = user.messages.all()
-    context = {
-        'user': user,
-        'reports': reports,
-        'messages': messages,
-    }
-    request.session['first_name'] = user.first_name
-    request.session['last_name'] = user.last_name
-    request.session['email'] = user.email
-    request.session['usr_id'] = user.id
+    try:
+        request.session['admin']
+        return redirect("/admin")
+    except:   
+        email = request.session['email']
+        user = User.objects.get(email=email)
+        reports = user.reports.all()
+        messages = user.messages.all()
+        context = {
+            'user': user,
+            'reports': reports,
+            'messages': messages,
+        }
+        request.session['first_name'] = user.first_name
+        request.session['last_name'] = user.last_name
+        request.session['email'] = user.email
+        request.session['usr_id'] = user.id
 
-    return render(request, "safe_zone_app/user_in.html", context)
+        return render(request, "safe_zone_app/user_in.html", context)
 
 
 def sign_out(request):
@@ -146,15 +150,18 @@ def admin(request):
 
 
 def show_user_info(request, user_id):
-    context = {
-        "all_reports": User.objects.get(id=user_id).reports.all(),
-        "user_first_name": User.objects.get(id=user_id).first_name,
-        "user_last_name": User.objects.get(id=user_id).last_name,
-        "user_email": User.objects.get(id=user_id).email,
-        "user_id": user_id
-    }
-
-    return render(request, 'safe_zone_app/user_info.html', context)
+    try:
+        if (request.session['admin']):
+            context = {
+                "all_reports": User.objects.get(id=user_id).reports.all(),
+                "user_first_name": User.objects.get(id=user_id).first_name,
+                "user_last_name": User.objects.get(id=user_id).last_name,
+                "user_email": User.objects.get(id=user_id).email,
+                "user_id": user_id
+            }
+            return render(request, 'safe_zone_app/user_info.html', context)
+    except:
+        return redirect("/sign_out")
 
 
 def send_message(request, user_id):
