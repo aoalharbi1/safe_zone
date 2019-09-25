@@ -226,7 +226,7 @@ def delete_report(request):
     return redirect(f"/admin/show_user/{user_id}")
 
 def default_route(request):
-    return HttpResponse("404 Bad request")
+    return render(request,"safe_zone_app/404_page.html")
 
 def show_reports(request , report_id):
     context = {
@@ -236,3 +236,4 @@ def show_reports(request , report_id):
 
 def upload_report (request):
     pass
+# test
