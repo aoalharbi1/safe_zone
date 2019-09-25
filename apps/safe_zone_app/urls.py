@@ -11,10 +11,12 @@ urlpatterns = [
     url(r'^admin$', views.admin),
     url(r'^admin/show_user/(?P<user_id>\d+)$', views.show_user_info),
     url(r'^admin/show_user/(?P<user_id>\d+)/edit$', views.admin_edit_user),
+    url(r'^user_in/reports/(?P<report_id>\d+)$', views.show_reports),
     url(r'^edit_info/(?P<user_id>\d+)$', views.edit_info),
     url(r'^user_in/edit_my_profile/(?P<user_id>\d+)$',views.edit_user),
     url(r'^edit_my_profile/(?P<user_id>\d+)$',views.edit_my_profile),
     url(r'^admin/show_user/(?P<user_id>\d+)/report/(?P<report_id>\d+)$', views.admin_show_report),
-    url(r'^report/delete$', views.delete_report ),
+    url(r'^report/delete$', views.delete_report),
+    url(r'^report/upload$', views.delete_report),
     url(r'^', views.default_route)
 ]

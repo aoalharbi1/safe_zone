@@ -232,6 +232,65 @@ input[type=submit]:hover {
     padding: 7px 0px 0px 0px;
 }
 
+.form_container{
+    display: flex;
+    justify-content: center;
+    height: 14em;
+}
+
+.upload_form {
+    justify-content: center;
+    width: 50%;
+}
+
+.drag_and_drop {
+    width: 100%;
+    height: 90%;
+    text-align: center;
+    border: 4px dashed #595959;
+}
+
+.upload_form p{
+    position: relative;
+    left: 0%;
+    top: 42%;
+    text-align: center;
+    color: #595959;
+    font-family: Arial;
+    display: inline;
+}
+
+.upload_form input[type=file]{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+}
+
+.upload_form input[type=submit]{
+    color: #fff;
+    background: #16a085;
+    border: none;
+    border-radius: 4px;
+    border-bottom: 4px solid #117A60;
+    transition: all .2s ease;
+    outline: none;
+    margin: 5px 0px 0px 0px;
+    float: none;
+}
+.upload_btn_container {
+    text-align: center;
+}
+
+.upload_form button:hover{
+    background: #149174;
+    color: #0C5645;
+}
+
+.upload_form button:active{
+    border:0;
+}
+
 @media screen and (max-width: 600px) {
     .col-25, .col-75, .messages, .reports, .users, .user_reports_in_admin .reports{
       width: 100%;
@@ -240,7 +299,7 @@ input[type=submit]:hover {
     .reports, .users {
         float: right;
     }
-    input[type=submit] {
+    input[type=submit], .upload_form input[type=submit]{
         width: 100%;
         margin-top: 8px;
     }

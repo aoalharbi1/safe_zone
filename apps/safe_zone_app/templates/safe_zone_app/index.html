@@ -19,6 +19,10 @@
                 $(".notification").hide()
                 $(".sign_in_form").css("display", "block");
             })
+
+            $('.upload_form input').change(function () {
+                $('.upload_form p').text(this.files.length + " file(s) selected");
+            });
         })
     </script>
 
@@ -46,6 +50,19 @@
             {{request.session.message}}
         </div>
         {% endif %}
+
+        <div class="row form_container">
+            <form action="#" method="POST" class="upload_form">
+                
+                <div class="drag_and_drop">
+                    <p>Drag and drop a file</p>
+                    <input type="file" name="file" multiple>
+                </div>
+                <div class="row upload_btn_container">
+                    <input type="submit" value="Upload">
+                </div>
+            </form>
+        </div>
 
         <form class="sign_up_form" action="/sign_up" method="post">
             {% csrf_token %}
