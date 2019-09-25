@@ -204,3 +204,9 @@ def admin_show_report(request, user_id, report_id):
         "report": Report.objects.get(id=report_id)
     }
     return render(request, 'safe_zone_app/reports.html', context)
+
+def show_reports(request , report_id):
+    context = {
+        "report": Report.objects.get(id=report_id)
+    }
+    return render(request, "safe_zone_app/reports.html", context )
