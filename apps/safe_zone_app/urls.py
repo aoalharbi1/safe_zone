@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^user_in/edit_my_profile/(?P<user_id>\d+)$',views.edit_user),
     url(r'^edit_my_profile/(?P<user_id>\d+)$',views.edit_my_profile),
     url(r'^admin/show_user/(?P<user_id>\d+)/report/(?P<report_id>\d+)$', views.admin_show_report),
-    url(r'^report/delete$', views.delete_report ),
-    url(r'^report/upload$', views.delete_report ),
+    url(r'^report/delete$', views.delete_report),
+    url(r'^report/upload$', views.delete_report),
     url(r'^', views.default_route)
 ]
