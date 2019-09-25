@@ -229,8 +229,9 @@ def default_route(request):
     return HttpResponse("404 Bad request")
 
 def show_reports(request , report_id):
-    context = {
-        "report": Report.objects.get(id=report_id)
-    }
-    return render(request, "safe_zone_app/reports.html", context )
-
+    if (request.session['usr_id'] == Report.objects.get(id=report_id).user.id):
+        context = {
+            "report": Report.objects.get(id=report_id)
+        }
+        return render(request, "safe_zone_app/reports.html", context )
+    return redirect("/user_in")
