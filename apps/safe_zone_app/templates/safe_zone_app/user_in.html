@@ -26,6 +26,7 @@
                 $(".user_reports_messages").hide();
                 $(".notification").hide();
                 $(".form_container").hide();
+                $(".center").hide();
                 $(".send_message").css("display", "block");
             });
 
@@ -33,13 +34,13 @@
                 $(".send_message").hide();
                 $(".notification").hide();
                 $(".form_container").hide();
-                $(".user_reports_messages").css("display", "block");
+                $(".center").css("display", "flex");
             });
 
             $("#upload_file").click(function () {
-                $(".user_reports_messages").hide();
                 $(".notification").hide();
                 $(".send_message").hide();
+                $(".center").hide();
                 $(".form_container").css("display", "flex");
             });
 
@@ -166,7 +167,7 @@
                         </td>
                         <td>
                             {{message.message}}
-                        </td> 
+                        </td>
                         <td>
                             {{message.created_at}}
                         </td>
@@ -175,34 +176,34 @@
                 </table>
             </div>
         </div>
-    </div>
-    <form action="user_in/message_sent/{{user.id}}" method="post">
-        {% csrf_token %}
-        <div class="send_message">
-            <div class="row">
-                <input type="text" name="user_message" id="user_message"
-                    placeholder="Please write your message here...">
-            </div>
-            <div class="row">
-                <input type="submit" value="Submit">
-            </div>
-        </div>
-    </form>
-    <div class="row form_container">
-        <form action="/upload" method="POST" class="upload_form" id="user_upload_form" enctype="multipart/form-data">
+        <form action="user_in/message_sent/{{user.id}}" method="post">
             {% csrf_token %}
-            <div class="drag_and_drop">
-                <p>Drag and drop a file, or click here to choose a file</p>
-                <input type="file" name="file" required id="file">
-            </div>
-            <div class="row upload_btn_container">
-                <input type="submit" value="Upload">
+            <div class="send_message">
+                <div class="row">
+                    <input type="text" name="user_message" id="user_message"
+                        placeholder="Please write your message here...">
+                </div>
+                <div class="row">
+                    <input type="submit" value="Submit">
+                </div>
             </div>
         </form>
-    </div>
-    <div id="dialog" title="Basic dialog">
-        <p>The report is ready</p>
-    </div>
+        <div class="row form_container">
+            <form action="/upload" method="POST" class="upload_form" id="user_upload_form"
+                enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="drag_and_drop">
+                    <p>Drag and drop a file, or click here to choose a file</p>
+                    <input type="file" name="file" required id="file">
+                </div>
+                <div class="row upload_btn_container">
+                    <input type="submit" value="Upload">
+                </div>
+            </form>
+        </div>
+        <div id="dialog" title="Basic dialog">
+            <p>The report is ready</p>
+        </div>
     </div>
 </body>
 
