@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^admin/show_user/(?P<user_id>\d+)/report/(?P<report_id>\d+)$', views.admin_show_report),
     url(r'^report/delete$', views.delete_report),
     url(r'^upload$', views.upload_report),
+    # url(r'^scan$', views.scan),
     url(r'^', views.default_route)
 ]

@@ -5,28 +5,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <title>Reports</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+
+    <script>
+        $("document").ready(function () {
+
+            $(".form_container").hide();
+
+            $("#sign_out").click(function () {
+                var url = "/sign_out";
+                $(location).attr('href', url);
+            });
+            $("#edit").click(function () {
+                var url = "user_in/edit_my_profile/{{user.id}}";
+                $(location).attr('href', url);
+            });
+        });
+    </script>
 </head>
 
 <body>
-    <h1>Report number {{report.id}}</h1>
-    <h2>{{report.md5}}</h2>
-    <h2>{{report.sha1}}</h2>
-    <h2>{{report.sha256}}</h2>
-    <h2>{{report.is_safe}}</h2>
-    <h2>{{report.user.id}}</h2>
+    {% include "safe_zone_app/header.html" %}
 
+    <div class="container">
+        <div class="row sub_container">
+            <nav class="dropdown">
+                <div class="dropbtn">Menu</div>
+                <div class="dropdown_content">
+                    <span id="edit">
+                        Edit profile
+                    </span>
+                    <span id="sign_out">
+                        Sign out
+                    </span>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <h1 class="welcome">
+                Welcome {{request.session.first_name}} {{request.session.last_name}}
+            </h1>
+        </div>
 
-    <input type="button" value="Print as pdf">
-    <input type="button" value="Send as email">
+        <div class="row">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="report_info row">
+                            User ID: {{report.user.id}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="report_info row">
+                            Report ID: {{report.id}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="report_info row">
+                            Checked at: {{report.checked_at}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="report_info row">
+                            md5: {{report.md5}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="report_info row">
+                            sha1: {{report.sha1}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="report_info row">
+                            sha256: {{report.sha256}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="report_info row">
+                            {% if report.is_safe is True %}
+                            <span class="safe">The file is safe </span>
+                            {% else %}
+                            <span class="not_safe">The file NOT safe</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    <form action="/report/delete" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="DELETE">
-        <input type="hidden" name="user_id" value="{{report.user.id}}">
-        <input type="hidden" name="report_id" value="{{report.id}}">
-    </form>
+        <div class="row center">
+            <div class="reports wide">
+                <table id="company_info">
+                    <tr>
+                        <th>Company</th>
+                        <th>Detected</th>
+                        <th>Version</th>
+                        <th>Result</th>
+                        <th>Report ID</th>
+                    </tr>
+                    {% for company in companies %}
+                    <tr>
+                        <td>
+                            <span>{{company.name}}</span>
+                        </td>
+                        <td>
+                            <span>{{company.detected}}</span>
+                        </td>
+                        <td>
+                            <span>{{company.version}}</span>
+                        </td>
+                        <td>
+                            <span>{{company.result}}</span>
+                        </td>
+                        <td>
+                            <span>{{company.report_id}}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="row center">
+            <input type="button" class="btn" value="Print as pdf">
+            <input type="button" class="btn" value="Send as email">
+
+            <form action="/report/delete" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="DELETE">
+                <input type="hidden" name="user_id" value="{{report.user.id}}">
+                <input type="hidden" name="report_id" value="{{report.id}}">
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
