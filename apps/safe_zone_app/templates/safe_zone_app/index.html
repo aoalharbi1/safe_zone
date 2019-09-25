@@ -63,11 +63,11 @@
         {% endif %}
 
         <div class="row form_container">
-            <form action="#" method="POST" class="upload_form">
-                
+            <form action="/upload" method="POST" class="upload_form" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="drag_and_drop">
                     <p>Drag and drop a file</p>
-                    <input type="file" name="file" multiple>
+                    <input type="file" name="file">
                 </div>
                 <div class="row upload_btn_container">
                     <input type="submit" value="Upload">

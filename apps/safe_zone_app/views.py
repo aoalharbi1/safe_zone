@@ -1,4 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 import bcrypt
 from . models import *
 import re
@@ -235,6 +237,18 @@ def show_reports(request , report_id):
     return render(request, "safe_zone_app/reports.html", context )
 
 def upload_report (request):
-    pass
+    user_file = request.FILES['file']
+    fs = FileSystemStorage(file_permissions_mode=0o600)
+    filename = fs.save("./apps/safe_zone_app/static/safe_zone_app/files/" + user_file.name, user_file)
+    print(fs.file_permissions_mode)
 
+    # url = 'https://www.virustotal.com/vtapi/v2/file/scan'
 
+    # params = {'apikey': 'ee8638fc597e7441387899153afd8ce11d4352d86e101e0b7cd6b69192dbc9b2'}
+
+    # files = {'file': ('user_file', open('user_file', 'rb'))}
+
+    # response = requests.post(url, files=files, params=params)
+
+    # print(response.json())
+    return HttpResponse("Done")
