@@ -211,6 +211,7 @@ def admin_show_report(request, user_id, report_id):
     }
     return render(request, 'safe_zone_app/reports.html', context)
 
+<<<<<<< HEAD
 def delete_report(request):
     delete_this = Report.objects.get(id = request.POST['report_id'])
     user_id = request.POST['user_id']
@@ -220,8 +221,10 @@ def delete_report(request):
 
 def default_route(request):
     return HttpResponse("404 Bad request")
+=======
 def show_reports(request , report_id):
     context = {
         "report": Report.objects.get(id=report_id)
     }
     return render(request, "safe_zone_app/reports.html", context )
+>>>>>>> Mohammed-Branch's-4
