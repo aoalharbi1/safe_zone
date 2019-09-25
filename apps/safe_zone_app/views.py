@@ -97,6 +97,7 @@ def sign_out(request):
 
     except:
         pass
+    
     return redirect("/")
 
 

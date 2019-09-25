@@ -13,6 +13,10 @@
                 var url = "/sign_out";
                 $(location).attr('href', url);
             })
+            $("#edit").click(function () {
+                var url = "user_in/edit_my_profile/{{user.id}}";
+                $(location).attr('href', url);
+            })
             $("#direct_message").click(function () {
                 $(".user_reports_messages").hide();
                 $(".notification").hide()
