@@ -5,22 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $("#btnPrint").live("click", function () {
+            var divContents = $("#dvContainer").html();
+            var printWindow = window.open('', '', 'height=400,width=800');
+            printWindow.document.write('<html><head><title>DIV Contents</title> ');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        });
+    </script>
+  
     <title>Reports</title>
 </head>
 
 <body>
-    <h1>Report number {{report.id}}</h1>
-    <h2>{{report.md5}}</h2>
-    <h2>{{report.sha1}}</h2>
-    <h2>{{report.sha256}}</h2>
-    <h2>{{report.is_safe}}</h2>
+<!-- anything inside this div will be printed as pdf, style tag should be included within -->
+    <div id="dvContainer">
+
+
+      
+        <h1>Report number {{report.id}}</h1>
+        <h2>{{report.md5}}</h2>
+        <h2>{{report.sha1}}</h2>
+        <h2>{{report.sha256}}</h2>
+        <h2>{{report.is_safe}}</h2>
     <h2>{{report.user.id}}</h2>
+    
+</div>
+<input type="button" value="Print Div Contents" id="btnPrint" />
 
-
-    <input type="button" value="Print as pdf">
+    
     <input type="button" value="Send as email">
-
+    
     <form action="/report/delete" method="POST">
         {% csrf_token %}
         <input type="submit" value="DELETE">
