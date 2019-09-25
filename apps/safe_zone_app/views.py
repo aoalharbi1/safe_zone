@@ -231,10 +231,12 @@ def default_route(request):
     return render(request,"safe_zone_app/404_page.html")
 
 def show_reports(request , report_id):
-    context = {
-        "report": Report.objects.get(id=report_id)
-    }
-    return render(request, "safe_zone_app/reports.html", context )
+    if (request.session['usr_id'] == Report.objects.get(id=report_id).user.id):
+        context = {
+            "report": Report.objects.get(id=report_id)
+        }
+        return render(request, "safe_zone_app/reports.html", context )
+    return redirect("/user_in")
 
 def upload_report (request):
     user_file = request.FILES['file']
