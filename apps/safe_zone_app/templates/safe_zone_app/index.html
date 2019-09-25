@@ -51,13 +51,18 @@
         </div>
         {% endif %}
 
-        <form action="#" method="POST" class="upload_form">
-            <div class="form_border">
-                <p>Drag your files here or click in this area.</p>
-                <input type="file" multiple>
-            </div>
-            <button type="submit">Upload</button>
-        </form>
+        <div class="row form_container">
+            <form action="#" method="POST" class="upload_form">
+                
+                <div class="drag_and_drop">
+                    <p>Drag and drop a file</p>
+                    <input type="file" name="file" multiple>
+                </div>
+                <div class="row upload_btn_container">
+                    <input type="submit" value="Upload">
+                </div>
+            </form>
+        </div>
 
         <form class="sign_up_form" action="/sign_up" method="post">
             {% csrf_token %}
