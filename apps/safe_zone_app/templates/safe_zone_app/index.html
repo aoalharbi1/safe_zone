@@ -11,13 +11,21 @@
         $("document").ready(function () {
             $("#sign_up").click(function () {
                 $(".sign_in_form").hide();
+                $(".form_container").hide();
                 $(".notification").hide()
                 $(".sign_up_form").css("display", "block");
             })
             $("#sign_in").click(function () {
                 $(".sign_up_form").hide();
+                $(".form_container").hide();
                 $(".notification").hide()
                 $(".sign_in_form").css("display", "block");
+            })
+            $("#upload_file").click(function () {
+                $(".sign_up_form").hide();
+                $(".sign_in_form").hide();
+                $(".notification").hide()
+                $(".form_container").css("display", "flex");
             })
 
             $('.upload_form input').change(function () {
@@ -41,6 +49,9 @@
                     </span>
                     <span id="sign_in">
                         Sign in
+                    </span>
+                    <span id="upload_file">
+                        Upload a file
                     </span>
                 </div>
             </nav>
