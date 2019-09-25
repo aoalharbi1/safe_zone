@@ -5,19 +5,18 @@
 }
 
 header {
-    display: flex;
-    width: inherit;
-    flex-wrap: wrap;
-    height: 60px;
-}
-
-.header_container {
-    margin: auto;
+    background-image: url("../imgs/logo.jpg");
+    height: 11em;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top;
+    border-radius: 5px;
+    background-color: #FFFFF7;
 }
 
 .container {
     border-radius: 5px;
-    background-color: #f2f2f2;
+    background-color: #FFFFF7;
     padding: 20px;
     min-height: 500px;
 }
@@ -150,24 +149,18 @@ input[type=submit]:hover, .btn:hover, .upload_form input[type=submit]:hover {
 
 .reports {
     overflow: scroll;
-    float: left;
     height: 15em;
-    width: 40%;
     background-color: white;
     border: #404040 1px solid;
-    margin: 10px;
-    padding: 5px 0px 0px 8px;
+    margin: 10px 0px 10px 0px;
 }
 
 .messages {
     overflow: scroll;
-    float: right;
     height: 15em;
-    width: 40%;
     background-color: white;
     border: #404040 1px solid;
-    margin: 10px;
-    padding: 0px 0px 0px 8px;
+    margin: 10px 0px 10px 0px;
 }
 
 .messages p {
@@ -222,6 +215,11 @@ input[type=submit]:hover, .btn:hover, .upload_form input[type=submit]:hover {
 }
 
 .center_items_container {
+    display: flex;
+    justify-content: center;
+}
+
+.center{
     display: flex;
     justify-content: center;
 }
@@ -289,11 +287,6 @@ input[type=submit]:hover, .btn:hover, .upload_form input[type=submit]:hover {
 
 .upload_form button:active{
     border:0;
-}
-
-.center {
-    display: flex;
-    justify-content: center;
 }
 
 .btn {

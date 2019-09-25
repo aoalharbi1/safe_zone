@@ -119,51 +119,90 @@
                 Welcome {{request.session.first_name}} {{request.session.last_name}}
             </h1>
         </div>
-        <div class="row user_reports_messages">
-            <div class="reports">
-                {% for report in reports %}
-                <p>
-                    This is report number {{report.id}}
-                    <a href="user_in/reports/{{report.id}}"> view </a>
-                </p>
-                {% endfor %}
-            </div>
-            <div class="messages">
-                {% for message in messages %}
-                <p>
-                    Message: {{message.message}} <br> Sent at {{message.created_at}}
-                </p>
-                {% endfor %}
+        <div class="row center">
+            <div class="reports wide">
+                <table id="company_info">
+                    <tr>
+                        <th>Report ID:</th>
+                        <th>Checked at</th>
+                        <th>Status</th>
+                        <th>Link</th>
+                    </tr>
+                    {% for report in reports %}
+                    <tr>
+                        <td>
+                            {{report.id}}
+                        </td>
+                        <td>
+                            {{report.checked_at}}
+                        </td>
+                        <td>
+                            {% if report.is_safe == True %}
+                            <span class="safe">Safe</span>
+                            {% else %}
+                            <span class="not_safe">Not Safe</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="user_in/reports/{{report.id}}"> view </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
-        <form action="user_in/message_sent/{{user.id}}" method="post">
+        <div class="row center">
+            <div class="messages wide">
+                <table id="company_info">
+                    <tr>
+                        <th>Message ID:</th>
+                        <th>Message</th>
+                        <th>Sent at</th>
+                    </tr>
+                    {% for message in messages %}
+                    <tr>
+                        <td>
+                            {{message.id}}
+                        </td>
+                        <td>
+                            {{message.message}}
+                        </td> 
+                        <td>
+                            {{message.created_at}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <form action="user_in/message_sent/{{user.id}}" method="post">
+        {% csrf_token %}
+        <div class="send_message">
+            <div class="row">
+                <input type="text" name="user_message" id="user_message"
+                    placeholder="Please write your message here...">
+            </div>
+            <div class="row">
+                <input type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+    <div class="row form_container">
+        <form action="/upload" method="POST" class="upload_form" id="user_upload_form" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="send_message">
-                <div class="row">
-                    <input type="text" name="user_message" id="user_message"
-                        placeholder="Please write your message here...">
-                </div>
-                <div class="row">
-                    <input type="submit" value="Submit">
-                </div>
+            <div class="drag_and_drop">
+                <p>Drag and drop a file, or click here to choose a file</p>
+                <input type="file" name="file" required id="file">
+            </div>
+            <div class="row upload_btn_container">
+                <input type="submit" value="Upload">
             </div>
         </form>
-        <div class="row form_container">
-            <form action="/upload" method="POST" class="upload_form" id="user_upload_form"
-                enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="drag_and_drop">
-                    <p>Drag and drop a file, or click here to choose a file</p>
-                    <input type="file" name="file" required>
-                </div>
-                <div class="row upload_btn_container">
-                    <input type="submit" value="Upload">
-                </div>
-            </form>
-        </div>
-        <div id="dialog" title="Basic dialog">
-            <p>The report is ready</p>
-        </div>
+    </div>
+    <div id="dialog" title="Basic dialog">
+        <p>The report is ready</p>
+    </div>
     </div>
 </body>
 

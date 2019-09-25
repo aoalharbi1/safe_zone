@@ -7,6 +7,9 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <script>
         $("document").ready(function () {
             $("#sign_up").click(function () {
@@ -26,10 +29,46 @@
                 $(".sign_in_form").hide();
                 $(".notification").hide();
                 $(".form_container").css("display", "flex");
+                show()
             })
 
             $('.upload_form input').change(function () {
                 $('.upload_form p').text(this.files.length + " file(s) selected");
+            });
+
+            $(function () {
+                $("#dialog").dialog({
+                    autoOpen: false,
+                    show: {
+                        effect: "blind",
+                        duration: 1000
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 1000
+                    }
+                });
+            });
+        });
+
+        $(document).on('submit', '#user_upload_form', function (event) {
+
+            event.preventDefault();
+
+            var form = $(this);
+            var formdata = false;
+            if (window.FormData) {
+                formdata = new FormData(form[0]);
+            }
+
+            var formAction = form.attr('action');
+            $.ajax({
+                url: '/upload',
+                data: formdata ? formdata : form.serialize(),
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
             });
         })
     </script>
@@ -175,6 +214,9 @@
                 <input type="submit" value="Submit">
             </div>
         </form>
+        <div id="dialog" title="Basic dialog">
+            <p>The report is ready</p>
+        </div>
     </div>
 </body>
 
