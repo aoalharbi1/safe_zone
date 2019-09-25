@@ -42,23 +42,61 @@
         </div>
 
         <div class="row">
-            <h2>All users </h2>
-            <div class="users">
-                <!-- 0 refers to user id, 1- first name, 2- last name, 3 user email,
+            <div class="reports wide">
+                <table id="company_info">
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>User Email</th>
+                        <th>Report Link</th>
+                    </tr>
+                    <!-- 0 refers to user id, 1- first name, 2- last name, 3 user email,
         check admin function in views.py -->
-                {% for user in all_users %}
-                <p>
-                    {{ user.1 }} ||
-                    {{ user.2 }} ||
-                    {{ user.3 }} ||
-                    <a href="admin/show_user/{{user.0}}">view</a>
-                </p>
-                {% endfor %}
+                    {% for user in all_users %}
+                    <tr>
+                        <td>{{ user.0 }}</td>
+                        <td>{{ user.1 }}</td>
+                        <td>{{ user.2 }}</td>
+                        <td>{{ user.3 }}</td>
+                        <td>
+                            <a href="admin/show_user/{{user.0}}">view</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
-            <div class="messages">
-                {% for one_message in all_messages %}
-                <p>{{ one_message.user.first_name }} SENT THIS MESSAGE: {{ one_message.message }}</p>
-                {% endfor %}
+        </div>
+        <div class="row">
+            <div class="messages wide">
+                <table id="company_info">
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>User Email</th>
+                        <th>Message</th>
+                    </tr>
+                    {% for message in all_messages %}
+                    <tr>
+                        <td>
+                            {{message.user.id}}
+                        </td>
+                        <td>
+                            {{ message.user.first_name }}
+                        </td>
+                        <td>
+                            {{message.user.last_name}}
+                        </td>
+                        <td>
+                            {{message.user.email}}
+                        </td>
+                        <td>
+                            {{ message.message }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
     </div>

@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-import bcrypt, re, requests
+import bcrypt
+import re
+import requests
 from time import sleep
 from . models import *
 
@@ -100,6 +102,9 @@ def sign_out(request):
     try:
         if 'admin' in request.session:
             del request.session['admin']
+        
+        if 'usr_id' in request.session:
+            del request.session['usr_id']
 
         del request.session['message']
         del request.session['email']
@@ -221,8 +226,10 @@ def edit_my_profile(request, user_id):
 
 
 def admin_show_report(request, user_id, report_id):
+    report = Report.objects.get(id=report_id)
     context = {
-        "report": Report.objects.get(id=report_id)
+        "report": report,
+        "companies": report.companies.all().order_by("name").values()
     }
     return render(request, 'safe_zone_app/reports.html', context)
 
@@ -232,7 +239,12 @@ def delete_report(request):
     user_id = request.POST['user_id']
     delete_this.delete()
 
-    return redirect(f"/admin/show_user/{user_id}")
+    if 'admin' in request.session:
+        return redirect(f"/admin/show_user/{user_id}")
+    
+    return redirect("/user_in")
+
+
 
 
 def default_route(request):
@@ -260,7 +272,7 @@ def upload_report(request):
 
         # setting the directory and the file permissions to read only
         fs = FileSystemStorage(directory_permissions_mode=0o400,
-                            file_permissions_mode=0o400)
+                               file_permissions_mode=0o400)
         filename = fs.save(
             "./apps/safe_zone_app/static/safe_zone_app/files/" + user_file.name, user_file)
 
@@ -273,7 +285,7 @@ def upload_report(request):
 
         response = requests.post(url, files=files, params=params)
         # End of the call
-        
+
         file_hash = response.json()['sha256']
 
         # This loop will keep checking with the API (every minute) to see if the file has been scanned yet
@@ -288,7 +300,13 @@ def upload_report(request):
         # Delete the uploaded file from the server
         fs.delete(filename)
 
-        insert_report(request, api_report)
+        if 'email' not in request.session:
+            request.session['result'] = api_report
+            return redirect("/show_report_not_signed_in")
+
+        else:
+            insert_report(request, api_report)
+
         return HttpResponse(True)
 
     return HttpResponse("An error occurred, please upload the file again")
@@ -296,6 +314,8 @@ def upload_report(request):
 # 	The purpose of the function: Sends the hash of the file to external APIs
 # 	What are the parameters: the sha256 hash of the file
 #	return: a json object containing information about the file
+
+
 def scan(hash):
     url = 'https://www.virustotal.com/vtapi/v2/file/report'
 
@@ -310,19 +330,33 @@ def scan(hash):
 
     return response.json()
 
+
 def insert_report(request, result):
-    user = User.objects.get(email = request.session['email'])
+    if 'email' not in request.session:
+        return redirect("/sign_out")
+
+    user = User.objects.get(email=request.session['email'])
 
     if result['positives'] > 0:
         is_safe = False
     else:
         is_safe = True
 
-    report = Report.objects.create(md5 = result['md5'], sha1 = result['sha1'], sha256 = result['sha256'], is_safe = is_safe, user = user)
+    report = Report.objects.create(
+        md5=result['md5'], sha1=result['sha1'], sha256=result['sha256'], is_safe=is_safe, user=user)
 
     for company, info in result['scans'].items():
-        Company.objects.create(name = company, detected = info['detected'], version = info['version'], result = str(info['result']), update = info['update'], report = report)
-    
+        Company.objects.create(name=company, detected=info['detected'], version=info['version'], result=str(
+            info['result']), update=info['update'], report=report)
+
     return
 
 
+def show_report_not_signed_in(request):
+    api_report = request.session['result']
+
+    context = {
+        "companies": api_report.pop('scans'),
+        "report": api_report
+    }
+    return render(request, "safe_zone_app/show_report_not_signed_in.html", context)
