@@ -5,19 +5,18 @@
 }
 
 header {
-    display: flex;
-    width: inherit;
-    flex-wrap: wrap;
-    height: 60px;
-}
-
-.header_container {
-    margin: auto;
+    background-image: url("../imgs/logo.jpg");
+    height: 11em;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top;
+    border-radius: 5px;
+    background-color: #FFFFF7;
 }
 
 .container {
     border-radius: 5px;
-    background-color: #f2f2f2;
+    background-color: #FFFFF7;
     padding: 20px;
     min-height: 500px;
 }
@@ -113,7 +112,7 @@ label {
     display: inline-block;
 }
   
-input[type=submit] {
+input[type=submit], .btn {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -124,7 +123,7 @@ input[type=submit] {
     margin: 8px 0px 0px 0px;;
 }
   
-input[type=submit]:hover {
+input[type=submit]:hover, .btn:hover, .upload_form input[type=submit]:hover {
     background-color: #45a049;
 }
 .col-25 {
@@ -150,24 +149,18 @@ input[type=submit]:hover {
 
 .reports {
     overflow: scroll;
-    float: left;
     height: 15em;
-    width: 40%;
     background-color: white;
     border: #404040 1px solid;
-    margin: 10px;
-    padding: 5px 0px 0px 8px;
+    margin: 10px 0px 10px 0px;
 }
 
 .messages {
     overflow: scroll;
-    float: right;
     height: 15em;
-    width: 40%;
     background-color: white;
     border: #404040 1px solid;
-    margin: 10px;
-    padding: 0px 0px 0px 8px;
+    margin: 10px 0px 10px 0px;
 }
 
 .messages p {
@@ -221,7 +214,12 @@ input[type=submit]:hover {
     width: 80%;
 }
 
-.user_info_container {
+.center_items_container {
+    display: flex;
+    justify-content: center;
+}
+
+.center{
     display: flex;
     justify-content: center;
 }
@@ -269,7 +267,7 @@ input[type=submit]:hover {
 
 .upload_form input[type=submit]{
     color: #fff;
-    background: #16a085;
+    background: #4CAF50;
     border: none;
     border-radius: 4px;
     border-bottom: 4px solid #117A60;
@@ -291,6 +289,58 @@ input[type=submit]:hover {
     border:0;
 }
 
+.btn {
+    margin-right: 8px;
+}
+
+.report_info {
+    padding: 3px 0px 0px 8px;
+}
+
+.wide {
+    width: 100%;
+    padding: 0px;
+}
+
+.safe {
+    color: #4CAF50;
+    font-size: 19px;
+    display: inline-block;
+}
+
+.not_safe {
+    color: red;
+    font-size: 19px;
+    display: inline-block;
+}
+
+#company_info {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+#company_info td, #company_info th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+  
+#company_info tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+  
+#company_info tr:hover {
+    background-color: #ddd;
+}
+  
+#company_info th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
 @media screen and (max-width: 600px) {
     .col-25, .col-75, .messages, .reports, .users, .user_reports_in_admin .reports{
       width: 100%;
@@ -299,10 +349,29 @@ input[type=submit]:hover {
     .reports, .users {
         float: right;
     }
-    input[type=submit], .upload_form input[type=submit]{
+    input[type=submit], .upload_form input[type=submit], .btn{
         width: 100%;
         margin-top: 8px;
     }
 }
 
+.safe:defined, .not_safe:defined {
+    animation: bounce 2s;
+}
 
+@keyframes bounce {
+	0%, 20%, 60%, 100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	40% {
+		-webkit-transform: translateY(-20px);
+		transform: translateY(-20px);
+	}
+
+	80% {
+		-webkit-transform: translateY(-10px);
+		transform: translateY(-10px);
+	}
+}
