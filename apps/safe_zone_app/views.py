@@ -44,7 +44,7 @@ def validate(request):
                 request.session['message'] = "Check the email and password and try again"
                 return redirect("/")
         except:
-            request.session['message'] = "Email not registered!"
+            request.session['message'] = "Check the email and password and try again"
             return redirect("/")
 
     elif choice == "user":
@@ -64,7 +64,7 @@ def validate(request):
                 request.session['message'] = "Check the email and password and try again"
                 return redirect("/")
         except:
-            request.session['message'] = "Email not registered!"
+            request.session['message'] = "Check the email and password and try again"
             return redirect("/")
     else:
         request.session['message'] = "Please pick a choice to sign in as an admin, or a user"
@@ -325,8 +325,6 @@ def scan(hash):
     }
 
     response = requests.get(url, params=params)
-
-    print(response.json())
 
     return response.json()
 

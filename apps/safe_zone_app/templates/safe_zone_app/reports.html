@@ -20,9 +20,21 @@
                 var url = "/sign_out";
                 $(location).attr('href', url);
             });
-            $("#edit").click(function () {
-                var url = "/user_in/edit_my_profile/{{report.user.id}}";
-                $(location).attr('href', url);
+            $("#back").click(function () {
+                window.history.back();
+            });
+
+            $("#btnPrint").on("click", function () {
+                var divContents = $("#print_container").html();
+
+                var printWindow = window.open('', '', 'height=400,width=800');
+                printWindow.document.write('<html><head><title>Report {{report.id}}</title>');
+                printWindow.document.write('</head><body >');
+                printWindow.document.write(divContents);
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                printWindow.print();
+
             });
         });
     </script>
@@ -36,8 +48,8 @@
             <nav class="dropdown">
                 <div class="dropbtn">Menu</div>
                 <div class="dropdown_content">
-                    <span id="edit">
-                        Edit profile
+                    <span id="back">
+                        Back
                     </span>
                     <span id="sign_out">
                         Sign out
@@ -51,86 +63,117 @@
             </h1>
         </div>
 
-        <div class="row">
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="report_info row">
-                            User ID: {{report.user.id}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            Report ID: {{report.id}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            Checked at: {{report.checked_at}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            md5: {{report.md5}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            sha1: {{report.sha1}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            sha256: {{report.sha256}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            {% if report.is_safe is True %}
-                            <span class="safe">The file is safe </span>
-                            {% else %}
-                            <span class="not_safe">The file NOT safe</span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <span id="print_container">
+            <style>
+                #company_info {
+                    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
 
-        <div class="row center">
-            <div class="reports wide">
-                <table id="company_info">
-                    <tr>
-                        <th>Company</th>
-                        <th>Detected</th>
-                        <th>Version</th>
-                        <th>Result</th>
-                        <th>Report ID</th>
-                    </tr>
-                    {% for company in companies %}
-                    <tr>
-                        <td>
-                            <span>{{company.name}}</span>
-                        </td>
-                        <td>
-                            <span>{{company.detected}}</span>
-                        </td>
-                        <td>
-                            <span>{{company.version}}</span>
-                        </td>
-                        <td>
-                            <span>{{company.result}}</span>
-                        </td>
-                        <td>
-                            <span>{{company.report_id}}</span>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                #company_info td,
+                #company_info th {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                }
+
+                #company_info tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+
+                #company_info tr:hover {
+                    background-color: #ddd;
+                }
+
+                #company_info th {
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    text-align: left;
+                    background-color: #4CAF50;
+                    color: white;
+                }
+            </style>
+            <div class="row">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="report_info row">
+                                User ID: {{report.user.id}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                Report ID: {{report.id}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                Checked at: {{report.checked_at}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                md5: {{report.md5}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                sha1: {{report.sha1}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                sha256: {{report.sha256}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                {% if report.is_safe is True %}
+                                <span class="safe">The file is safe </span>
+                                {% else %}
+                                <span class="not_safe">The file NOT safe</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
-        </div>
+
+            <div class="row center">
+                <div class="reports wide">
+                    <table id="company_info">
+                        <tr>
+                            <th>Company</th>
+                            <th>Detected</th>
+                            <th>Version</th>
+                            <th>Result</th>
+                            <th>Report ID</th>
+                        </tr>
+                        {% for company in companies %}
+                        <tr>
+                            <td>
+                                <span>{{company.name}}</span>
+                            </td>
+                            <td>
+                                <span>{{company.detected}}</span>
+                            </td>
+                            <td>
+                                <span>{{company.version}}</span>
+                            </td>
+                            <td>
+                                <span>{{company.result}}</span>
+                            </td>
+                            <td>
+                                <span>{{company.report_id}}</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </span>
         <div class="row center">
-            <input type="button" class="btn" value="Print as pdf">
+            <input type="button" class="btn" id="btnPrint" value="Print as pdf">
             <input type="button" class="btn" value="Send as email">
 
             <form action="/report/delete" method="POST">

@@ -1,91 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Report</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script>
+        $("document").ready(function () {
+            $("#btnPrint").on("click", function () {
+                var divContents = $("#print_container").html();
+
+                var printWindow = window.open('', '', 'height=400,width=800');
+                printWindow.document.write('<html><head><title>Report {{report.id}}</title>');
+                printWindow.document.write('</head><body >');
+                printWindow.document.write(divContents);
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                printWindow.print();
+
+            });
+        })
+    </script>
 </head>
+
 <body>
     {% include "safe_zone_app/header.html" %}
 
     <div class="container">
-        <div class="row">
-            <table>
-                <tbody>
-                    <tr>
-                        <td class="report_info row">
-                            Scan ID: {{report.scan_id}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            Checked at: {{report.scan_date}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            md5: {{report.md5}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            sha1: {{report.sha1}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            sha256: {{report.sha256}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="report_info row">
-                            {% if report.positives == 0 %}
-                            <span class="safe">The file is safe </span>
-                            {% else %}
-                            <span class="not_safe">The file NOT safe</span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <span id="print_container">
+            <style>
+                #company_info {
+                    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
 
-        <div class="row center">
-            <div class="reports wide">
-                <table id="company_info">
-                    <tr>
-                        <th>Company</th>
-                        <th>Detected</th>
-                        <th>Version</th>
-                        <th>Result</th>
-                        <th>Update</th>
-                    </tr>
-                    {% for key, value in companies.items %}
-                    <tr>
-                        <td>
-                            {{key}}
-                        </td>
-                        <td>
-                            {{value.detected}}
-                        </td>
-                        <td>
-                            {{value.version}}
-                        </td>
-                        <td>
-                            {{value.result}}
-                        </td>
-                        <td>
-                            {{value.update}}
-                        </td>
-                    </tr>
-                    {% endfor %}
+                #company_info td,
+                #company_info th {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                }
+
+                #company_info tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+
+                #company_info tr:hover {
+                    background-color: #ddd;
+                }
+
+                #company_info th {
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    text-align: left;
+                    background-color: #4CAF50;
+                    color: white;
+                }
+            </style>
+            <div class="row">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="report_info row">
+                                Scan ID: {{report.scan_id}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                Checked at: {{report.scan_date}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                md5: {{report.md5}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                sha1: {{report.sha1}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                sha256: {{report.sha256}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="report_info row">
+                                {% if report.positives == 0 %}
+                                <span class="safe">The file is safe </span>
+                                {% else %}
+                                <span class="not_safe">The file NOT safe</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
-        </div>
+
+            <div class="row center">
+                <div class="reports wide">
+                    <table id="company_info">
+                        <tr>
+                            <th>Company</th>
+                            <th>Detected</th>
+                            <th>Version</th>
+                            <th>Result</th>
+                            <th>Update</th>
+                        </tr>
+                        {% for key, value in companies.items %}
+                        <tr>
+                            <td>
+                                {{key}}
+                            </td>
+                            <td>
+                                {{value.detected}}
+                            </td>
+                            <td>
+                                {{value.version}}
+                            </td>
+                            <td>
+                                {{value.result}}
+                            </td>
+                            <td>
+                                {{value.update}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </span>
         <div class="row center">
-            <input type="button" class="btn" value="Print as pdf">
+            <input type="button" class="btn" id="btnPrint" value="Print as pdf">
             <input type="button" class="btn" value="Send as email">
         </div>
     </div>
