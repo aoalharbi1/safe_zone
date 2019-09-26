@@ -83,7 +83,7 @@ def user_in(request):
     except:
         email = request.session['email']
         user = User.objects.get(email=email)
-        reports = user.reports.all()
+        reports = user.reports.all().order_by("-id")
         messages = user.messages.all()
         context = {
             'user': user,
@@ -245,12 +245,6 @@ def delete_report(request):
     return redirect("/user_in")
 
 
-
-
-def default_route(request):
-    return render(request, "safe_zone_app/404_page.html")
-
-
 def show_reports(request, report_id):
     if (request.session['usr_id'] == Report.objects.get(id=report_id).user.id):
         report = Report.objects.get(id=report_id)
@@ -358,3 +352,6 @@ def show_report_not_signed_in(request):
         "report": api_report
     }
     return render(request, "safe_zone_app/show_report_not_signed_in.html", context)
+
+def default_route(request):
+    return render(request, "safe_zone_app/404_page.html")

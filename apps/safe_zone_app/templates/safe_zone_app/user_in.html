@@ -81,8 +81,14 @@
                 processData: false,
                 type: 'POST',
                 complete: function (data, textStatus, jqXHR) {
+                    $("#dialog").append("<div class=row><input type=submit id=view value=View></div>");
                     $("#dialog").dialog("open");
                 }
+            });
+
+            $(document).on('click', '#view', function(){
+                var url = "/user_in";
+                $(location).attr('href', url);
             });
         })
     </script>
