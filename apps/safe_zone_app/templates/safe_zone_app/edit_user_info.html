@@ -3,24 +3,74 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit user info</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'safe_zone_app/css/style.css' %}">
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+
+    <script>
+        $("document").ready(function () {
+
+            $("#sign_out").click(function () {
+                var url = "/sign_out";
+                $(location).attr('href', url);
+            });
+            $("#back").click(function () {
+                window.history.back();
+            });
+        });
+    </script>
 </head>
 
 <body>
-    <div>
-        <h1>Edit user information</h1>
+    {% include "safe_zone_app/header.html" %}
+    <div class="container">
+        <div class="row sub_container">
+            <nav class="dropdown">
+                <div class="dropbtn">Menu</div>
+                <div class="dropdown_content">
+                    <span id="back">
+                        Back
+                    </span>
+                    <span id="sign_out">
+                        Sign out
+                    </span>
+                </div>
+            </nav>
+        </div>
+        <div class="center">
+            <h1>Edit user information</h1>
+        </div>
         <form action="/edit_info/{{user_id}}" method="POST">
             {% csrf_token %}
-            first name:
-            <input type="text" name="first_name" value="{{user_first_name}}">
-            last name:
-            <input type="text" name="last_name" value="{{user_last_name}}">
-            email:
-            <input type="text" name="email" value="{{user_email}}">
-            
-            <input type="submit" value="edit">
+            <div class="row">
+                <div class="col-25">
+                    <label for="first_name">First Name:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" name="first_name" id="first_name" value="{{user_first_name}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="last_name">Last Name:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" name="last_name" id="last_name" value="{{user_last_name}}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="email">Email:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" name="email" value="{{user_email}}">
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" class="btn" value="Edit">
+            </div>
         </form>
     </div>
 </body>

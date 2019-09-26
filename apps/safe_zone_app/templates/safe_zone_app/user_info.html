@@ -13,6 +13,10 @@
                 var url = "/sign_out";
                 $(location).attr('href', url);
             })
+            $("#edit").click(function () {
+                var url = "/admin/show_user/{{user_id}}/edit";
+                $(location).attr('href', url);
+            })
         })
     </script>
 </head>
@@ -55,21 +59,38 @@
                 </tbody>
             </table>
         </div>
-                <div>
-                    <a href="/admin/show_user/{{user_id}}/edit">Edit user info</a>
-                </div>
-        <div class="user_reports_in_admin">
-            <div class="reports">
-                <p class="pad_5_center">
-                    User reports:
-                </p>
-                {% for report in all_reports %}
-                this is report number {{report.id}}
-                <a href="/admin/show_user/{{user_id}}/report/{{report.id}}">
-                    click here to view
-                </a>
-                <br>
-                {% endfor %}
+        <div class="row center">
+            <div class="reports wide">
+                <table id="company_info">
+                    <tr>
+                        <th>Report ID</th>
+                        <th>Report Status</th>
+                        <th>Report Link</th>
+                    </tr>
+                    {% for report in all_reports %}
+                    <tr>
+                        <td>
+                            <span>
+                                {{report.id}}
+                            </span>
+                        </td>
+                        <td class="report_info row">
+                            {% if report.is_safe is True %}
+                            <span class="safe">Safe </span>
+                            {% else %}
+                            <span class="not_safe">Not Safe</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span>
+                                <a href="/admin/show_user/{{user_id}}/report/{{report.id}}">
+                                    View
+                                </a>
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
     </div>
