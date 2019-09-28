@@ -16,7 +16,10 @@
             $("#edit").click(function () {
                 var url = "/admin/show_user/{{user_id}}/edit";
                 $(location).attr('href', url);
-            })
+            });
+            $("#back").click(function () {
+                window.history.back();
+            });
         })
     </script>
 </head>
@@ -31,6 +34,9 @@
                 <div class="dropdown_content">
                     <span id="edit">
                         Edit profile
+                    </span>
+                    <span id="back">
+                        Back
                     </span>
                     <span id="sign_out">
                         Sign out
@@ -64,6 +70,7 @@
                 <table id="company_info">
                     <tr>
                         <th>Report ID</th>
+                        <th>Checked at</th>
                         <th>Report Status</th>
                         <th>Report Link</th>
                     </tr>
@@ -72,6 +79,11 @@
                         <td>
                             <span>
                                 {{report.id}}
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                {{report.checked_at}}
                             </span>
                         </td>
                         <td class="report_info row">
