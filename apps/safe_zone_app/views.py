@@ -102,7 +102,7 @@ def sign_out(request):
     try:
         if 'admin' in request.session:
             del request.session['admin']
-        
+
         if 'usr_id' in request.session:
             del request.session['usr_id']
 
@@ -166,7 +166,7 @@ def show_user_info(request, user_id):
     try:
         if (request.session['admin']):
             context = {
-                "all_reports": User.objects.get(id=user_id).reports.all(),
+                "all_reports": User.objects.get(id=user_id).reports.all().order_by("-id"),
                 "user_first_name": User.objects.get(id=user_id).first_name,
                 "user_last_name": User.objects.get(id=user_id).last_name,
                 "user_email": User.objects.get(id=user_id).email,
@@ -241,7 +241,7 @@ def delete_report(request):
 
     if 'admin' in request.session:
         return redirect(f"/admin/show_user/{user_id}")
-    
+
     return redirect("/user_in")
 
 
@@ -268,7 +268,8 @@ def upload_report(request):
         fs = FileSystemStorage(directory_permissions_mode=0o400,
                                file_permissions_mode=0o400)
         filename = fs.save(
-            "./apps/safe_zone_app/static/safe_zone_app/files/" + user_file.name, user_file)
+            "./apps/safe_zone_app/static/safe_zone_app/files/" + user_file.name, user_file
+        )
 
         # Calling the external API
         url = 'https://www.virustotal.com/vtapi/v2/file/scan'
@@ -279,6 +280,9 @@ def upload_report(request):
 
         response = requests.post(url, files=files, params=params)
         # End of the call
+
+        # Delete the uploaded file from the server
+        fs.delete(filename)
 
         file_hash = response.json()['sha256']
 
@@ -291,9 +295,6 @@ def upload_report(request):
 
             sleep(40)
 
-        # Delete the uploaded file from the server
-        fs.delete(filename)
-
         if 'email' not in request.session:
             request.session['result'] = api_report
             return redirect("/show_report_not_signed_in")
@@ -303,7 +304,7 @@ def upload_report(request):
 
         return HttpResponse(True)
 
-    return HttpResponse("An error occurred, please upload the file again")
+    return HttpResponse(False)
 
 # 	The purpose of the function: Sends the hash of the file to external APIs
 # 	What are the parameters: the sha256 hash of the file
@@ -352,6 +353,7 @@ def show_report_not_signed_in(request):
         "report": api_report
     }
     return render(request, "safe_zone_app/show_report_not_signed_in.html", context)
+
 
 def default_route(request):
     return render(request, "safe_zone_app/404_page.html")

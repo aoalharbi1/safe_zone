@@ -48,15 +48,25 @@
                 $('.upload_form p').text(this.files.length + " file(s) selected");
             });
 
+            $("#upload_btn").click(function () {
+                var file = $("#file").val();
+
+                if (file) {
+                    $("#dialog p").html("Your file is being checked, you will be notified when the report is ready");
+                    $("#dialog").dialog("open");
+                    $("#upload_btn").fadeOut(2000);
+                }
+            });
+
             $(function () {
                 $("#dialog").dialog({
                     autoOpen: false,
                     show: {
-                        effect: "blind",
+                        effect: "puff",
                         duration: 1000
                     },
                     hide: {
-                        effect: "explode",
+                        effect: "fold",
                         duration: 1000
                     }
                 });
@@ -81,12 +91,20 @@
                 processData: false,
                 type: 'POST',
                 complete: function (data, textStatus, jqXHR) {
-                    $("#dialog").append("<div class=row><input type=submit id=view value=View></div>");
-                    $("#dialog").dialog("open");
+                    if (data.responseText === "True") {
+                        $("#dialog").append("<div class=row><input type=submit id=view value=View></div>");
+                        $("#dialog p").html("Your report is ready, thank you for your patience");
+                        $("#dialog").dialog("open");
+                    }
+                    else {
+                        $("#dialog").append("<div class=row><input type=submit id=view value=View></div>");
+                        $("#dialog p").html("<sapn class=error>An error occurred while checking your file, please upload it again</span>");
+                        $("#dialog").dialog("open");
+                    }
                 }
             });
 
-            $(document).on('click', '#view', function(){
+            $(document).on('click', '#view', function () {
                 var url = "/user_in";
                 $(location).attr('href', url);
             });
@@ -203,12 +221,12 @@
                     <input type="file" name="file" required id="file">
                 </div>
                 <div class="row upload_btn_container">
-                    <input type="submit" value="Upload">
+                    <input type="submit" id="upload_btn" value="Upload">
                 </div>
             </form>
         </div>
         <div id="dialog" title="Basic dialog">
-            <p>The report is ready</p>
+            <p></p>
         </div>
     </div>
 </body>

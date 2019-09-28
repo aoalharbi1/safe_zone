@@ -32,19 +32,29 @@
                 show()
             })
 
-            $('.upload_form input').change(function () {
-                $('.upload_form p').text(this.files.length + " file(s) selected");
+            $(".upload_form input").change(function () {
+                $(".upload_form p").text(this.files.length + " file(s) selected");
+            });
+
+            $("#upload_btn").click(function(){
+                var file = $("#file").val();
+
+                if(file){
+                    $("#dialog p").html("Your file is being checked, you will be redirected to the report page when it is ready");
+                    $("#dialog").dialog("open");
+                    $("#upload_btn").fadeOut(2000);
+                }
             });
 
             $(function () {
                 $("#dialog").dialog({
                     autoOpen: false,
                     show: {
-                        effect: "blind",
+                        effect: "puff",
                         duration: 1000
                     },
                     hide: {
-                        effect: "explode",
+                        effect: "fold",
                         duration: 1000
                     }
                 });
@@ -52,7 +62,6 @@
         });
 
         $(document).on('submit', '#user_upload_form', function (event) {
-
             event.preventDefault();
 
             var form = $(this);
@@ -62,6 +71,8 @@
             }
 
             var formAction = form.attr('action');
+
+            $("#file").val('');
             $.ajax({
                 url: '/upload',
                 data: formdata ? formdata : form.serialize(),
@@ -106,10 +117,10 @@
                 {% csrf_token %}
                 <div class="drag_and_drop">
                     <p>Drag and drop a file, or click here to choose a file</p>
-                    <input type="file" name="file" required>
+                    <input type="file" id="file" name="file" required>
                 </div>
                 <div class="row upload_btn_container">
-                    <input type="submit" value="Upload">
+                    <input type="submit" id="upload_btn" value="Upload">
                 </div>
             </form>
         </div>
@@ -215,7 +226,7 @@
             </div>
         </form>
         <div id="dialog" title="Basic dialog">
-            <p>The report is ready</p>
+            <p></p>
         </div>
     </div>
 </body>
