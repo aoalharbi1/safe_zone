@@ -162,7 +162,7 @@ def admin(request):
     context = {
         # all users stores a set of values orderd as bellow,
         "all_users": User.objects.values_list('id', 'first_name', 'last_name', 'email'),
-        "all_messages": Message.objects.all(),
+        "all_messages": Message.objects.all().order_by("-id"),
     }
     return render(request, 'safe_zone_app/admin_page.html', context)
 
