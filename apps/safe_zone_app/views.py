@@ -137,12 +137,17 @@ def registration(request):
         request.POST['secret_answer'].encode(), bcrypt.gensalt())
 
     request.session['message'] = ""
-    new_user = User.objects.create(first_name=request.POST['first_name'],
-                                   last_name=request.POST['last_name'],
-                                   password=hashed_password,
-                                   email=request.POST['email'],
-                                   secret_question=request.POST['secret_question'],
-                                   secret_answer=hashed_answer)
+    try:
+        request.session['message'] = "Thank you for registering with us"
+
+        new_user = User.objects.create(first_name=request.POST['first_name'],
+                                    last_name=request.POST['last_name'],
+                                    password=hashed_password,
+                                    email=request.POST['email'],
+                                    secret_question=request.POST['secret_question'],
+                                    secret_answer=hashed_answer)
+    except:
+        request.session['message'] = "Choose another email please"
 
     return redirect("/")
 
@@ -197,7 +202,11 @@ def edit_info(request, user_id):
     user_to_edit = User.objects.get(id=user_id)
     user_to_edit.first_name = request.POST['first_name']
     user_to_edit.last_name = request.POST['last_name']
-    user_to_edit.email = request.POST['email']
+    try:
+        user_to_edit.email = request.POST['email']
+    except:
+        request.session['message'] = "Choose another email please"
+        
     user_to_edit.save()
     return redirect("/admin")
 
